@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var items = [];
+    var queque = {
+        enqueque:function (el) {
+            items.push(el);
+        },
+        delqueque:function () {
+            return items.shift();
+        },
+        quequelen:function () {
+            return items.length;
+        },
+        firstitem:function () {
+            return items[0];
+        },
+        isEmpty:function () {
+            return items.length = 0;
+        },
+        clearitems:function () {
+            items = [];
+        }
+    }
+    var hotPotato = function (nameList,num) {
+        for (var i = 0; i < nameList.length; i++) {
+            queque.enqueque(nameList[i]);
+        }
+        var eliminated = "";
+        while (queque.quequelen() > 1) {
+            for (var i = 0; i < num; i++) {
+                queque.enqueque(queque.delqueque());
+            }
+
+            eliminated = queque.delqueque();
+            console.log(eliminated + "被淘汰");
+        }
+        return queque.delqueque();
+    }
+    var people = ['a','b','c','d','e','f','g'];
+    var winner = hotPotato(people,10);
+    console.log(winner+"在本场击鼓传花胜出")
+</script>
+</body>
+</html>
