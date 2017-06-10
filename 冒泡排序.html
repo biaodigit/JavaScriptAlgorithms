@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var bubble = {
+        bubbling:function (arr) {
+            for(var i=0;i<arr.length - 1;i++){
+                for(var j= 0;j<arr.length - i;j++){
+                    if(arr[j] < arr[j+1]){
+                        var temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                    }
+                    console.log(arr)
+                }
+            }
+            console.log(arr);
+        }
+    }
+    bubble.bubbling([3,1,5,7,2,4,9,6,10,8])
+</script>
+</body>
+</html>
