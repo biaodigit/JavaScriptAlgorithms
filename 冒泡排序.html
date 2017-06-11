@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="SortTestHelper.js"></script>
 </head>
 <body>
 <script>
     var bubble = {
         bubbling:function (arr) {
-            for(var i=0;i<arr.length - 1;i++){
-                for(var j= 0;j<arr.length - i;j++){
-                    if(arr[j] < arr[j+1]){
-                        var temp = arr[j];
-                        arr[j] = arr[j+1];
-                        arr[j+1] = temp;
+            for(var i=0;i<arr.length - 1;i++) {
+                for(var j=1;j<arr.length - i;j++){
+                    if(arr[j]>arr[j-1]){
+                        wrap(arr,j,j-1);
                     }
-                    console.log(arr)
                 }
             }
             console.log(arr);
