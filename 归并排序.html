@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    let _merge = function (arr,l,mid,r) {
+        let aux = [];
+        for(let i = l;i <= r;i++){
+            aux[i-l] = arr[i]
+        }
+        i = l;j = mid + 1;
+        //i=0,mid=1,j=2,l=0,r=3
+        //[1,6,5,7]
+        for(let k = l; k <= r; k++){
+            if(i>mid){
+                arr[k] = aux[j-l];
+                j++;
+            }else if(j>r){
+                arr[k] = aux[i-l];
+                i++;
+            }else if(aux[i-l] < aux[j-l]){
+                arr[k] = aux[i-l];
+                i++;
+            }else{
+                arr[k] = aux[j-l];
+                j++
+            }
+        }
+    }
+
+    let _mergeSort = function (arr,l,r) {
+        if(l>=r){
+           return;
+        }
+
+        let mid = Math.floor((l+r)/2);
+        _mergeSort(arr,l,mid);
+        _mergeSort(arr,mid+1,r);
+        _merge(arr,l,mid,r);
+    }
+    let mergeSort = function (arr) {
+        let len = arr.length;
+        _mergeSort(arr,0,len-1)
+        console.log(arr);
+    }
+    let arr = generateRandomArray(10000,1,100000000)
+    testSort(mergeSort,arr);
+</script>
+</body>
+</html>
