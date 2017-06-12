@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let items = [];
+    let Priority = {
+       enqueue:function (ele,priority ) {
+         if(this.empty()){
+             items.push([ele,priority])
+         }else{
+             let canAdd = false;
+             for(let i=0;i<items.length;i++){
+                 if(priority < items[i][1]){
+                     items.splice(i,0,[ele,priority]);
+                     canAdd = true;
+                     break;
+                 }
+             }
+             if(!canAdd){
+                 items.push([ele,priority])
+             }
+         }
+       },
+       empty:function () {
+         return items.length == 0;
+       },
+       print:function () {
+           let people = [];
+           for(let i=0;i<items.length;i++){
+               people.push(items[i][0])
+           }
+           console.log(people);
+       }
+    };
+    Priority.enqueue('a',3);
+    Priority.enqueue('b',3);
+    Priority.enqueue('svip',1);
+    Priority.enqueue('vip',2);
+    Priority.print();
+</script>
+</body>
+</html>

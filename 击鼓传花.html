@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,15 +7,15 @@
 </head>
 <body>
 <script>
-    var items = [];
-    var queque = {
-        enqueque:function (el) {
+    let items = [];
+    let queue = {
+        enqueue:function (el) {
             items.push(el);
         },
-        delqueque:function () {
+        delqueue:function () {
             return items.shift();
         },
-        quequelen:function () {
+        queuelen:function () {
             return items.length;
         },
         firstitem:function () {
@@ -27,23 +28,23 @@
             items = [];
         }
     }
-    var hotPotato = function (nameList,num) {
-        for (var i = 0; i < nameList.length; i++) {
-            queque.enqueque(nameList[i]);
+    let hotPotato = function (nameList,num) {
+        for (let i = 0; i < nameList.length; i++) {
+            queue.enqueue(nameList[i]);
         }
-        var eliminated = "";
-        while (queque.quequelen() > 1) {
-            for (var i = 0; i < num; i++) {
-                queque.enqueque(queque.delqueque());
+        let eliminated = "";
+        while (queue.quequelen() > 1) {
+            for (let i = 0; i < num; i++) {
+                queue.enqueue(queque.delqueque());
             }
 
-            eliminated = queque.delqueque();
+            eliminated = queue.delqueque();
             console.log(eliminated + "被淘汰");
         }
-        return queque.delqueque();
+        return queue.delqueque();
     }
-    var people = ['a','b','c','d','e','f','g'];
-    var winner = hotPotato(people,10);
+    let people = ['a','b','c','d','e','f','g'];
+    let winner = hotPotato(people,10);
     console.log(winner+"在本场击鼓传花胜出")
 </script>
 </body>

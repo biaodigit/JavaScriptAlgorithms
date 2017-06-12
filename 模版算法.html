@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    let selectionSort = {
+        Sort:function (arr) {
+            let len = arr.length;
+            for(let i = 0;i < len;i++){
+                lenminIndex = i;
+                for(let j = i+1;j < len;j++){
+                    if(arr[j] < arr[minIndex]){
+                        minIndex = j;
+                    }
+                }
+                wrap(arr,i,minIndex);
+            }
+            console.log(arr);
+        }
+    }
+    selectionSort.Sort([3,1,5,7,2,4,9,6,10,8])
+</script>
+</body>
+</html>
