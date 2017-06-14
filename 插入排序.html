@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    let insertionSort = {
+        Sort:function (arr) {
+            for(let i=1;i<arr.length;i++){
+                for(let j=i;j>0 && arr[j-1]>arr[j];j--){
+                    wrap(arr,j,j-1)
+                }
+            }
+            console.log(arr);
+        }
+    }
+    let arr = generateRandomArray(10,1,10)
+    testSort(insertionSort.Sort,arr)
+</script>
+</body>
+</html>
