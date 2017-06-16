@@ -10,14 +10,18 @@
     let insertionSort = {
         Sort:function (arr) {
             for(let i=1;i<arr.length;i++){
-                for(let j=i;j>0 && arr[j-1]>arr[j];j--){
-                    wrap(arr,j,j-1)
+                //寻找arr[i]合适插入的位置
+                let el = arr[i];
+                let j;//n保存元素el应该插入的位置
+                for(j=i;j>0 && arr[j-1]>el;j--){
+                    arr[j] = arr[j-1];
                 }
+                arr[j] = el;
             }
-            console.log(arr);
+//            console.log(arr);
         }
     }
-    let arr = generateRandomArray(10,1,10)
+    let arr = generateRandomArray(10000,1,4)
     testSort(insertionSort.Sort,arr)
 </script>
 </body>
