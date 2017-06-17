@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    let _partition2 = function (arr, l, r) {
+        let v = arr[l];
+        //arr[l+1....i)<=v;arr(j...r]>=v
+        let i = l + 1,
+            j = r;
+
+        while (true) {
+            while (i <= r && arr[i] < v) {
+                i++;
+            }
+            while (j >= l + 1 && arr[j] > v) {
+                j--;
+            }
+            if (i > j) {
+                break;
+            }
+            wrap(arr, i, j);
+            i++;
+            j--;
+        }
+        wrap(arr, l, j);
+        return j;
+
+    }
+    let _quickSort2 = function (arr, l, r) {
+        if (l >= r) {
+            return;
+        }
+
+        let p = _partition2(arr, l, r);
+        _quickSort2(arr, l, p - 1);
+        _quickSort2(arr, p + 1, r);
+    }
+    let quickSort2 = function (arr) {
+        let len = arr.length;
+        _quickSort2(arr, 0, len - 1);
+        console.log(arr);
+    }
+    let arr = generateRandomArray(10000, 1, 100000000);
+    testSort(quickSort2, arr);
+</script>
+</body>
+</html>
