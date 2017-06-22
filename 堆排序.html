@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    function MaxHeap(n) {
+        this.data = [].concat(n);
+        this.data.splice(0, 0, '');
+
+        this.size = function () {
+            return count;
+        }
+        this.isEmpty = function () {
+            return count == 0;
+        }
+        this.addel = function (el) {
+            this.data.push(el);
+            this.shiftUp();
+        }
+        this.shiftUp = function () {
+            let count = this.data.length - 1;
+            console.log(count);
+            while (count > 1 && this.data[count] > this.data[Math.floor(count / 2)]) {
+                wrap(this.data, count, Math.floor(count / 2));
+                count /= 2;
+            }
+            console.log(this.data);
+        }
+    }
+
+    let maxheap = new MaxHeap([10, 9, 8, 6, 5, 4, 3, 2, 1]);
+    maxheap.addel(7);
+</script>
+</body>
+</html>
