@@ -19,7 +19,6 @@
         }
         this.addel = function (el) {
             this.data.push(el);
-            this.shiftUp();
         }
         this.shiftUp = function () {
             let count = this.data.length - 1;
@@ -30,10 +29,27 @@
             }
             console.log(this.data);
         }
+        this.shiftDown = function () {
+            let count = this.data.length;
+            wrap(this.data, 1, count - 1);
+            this.data.length--;
+            console.log(this.data);
+            let k = 1;
+            while (2 * k < this.data.length && this.data[k]<this.data[2*k]) {
+                let j = 2 * k;
+                if(j+1 <= count - 1 && this.data[j+1] > this.data[j]){
+                    j += 1;
+                }
+                wrap(this.data,k,j);
+                k = j;
+            }
+            console.log(this.data);
+        }
     }
 
     let maxheap = new MaxHeap([10, 9, 8, 6, 5, 4, 3, 2, 1]);
-    maxheap.addel(7);
+    maxheap.addel(1);
+    maxheap.shiftDown();
 </script>
 </body>
 </html>
