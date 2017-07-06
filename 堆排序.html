@@ -17,39 +17,46 @@
         this.isEmpty = function () {
             return count == 0;
         }
-        this.addel = function (el) {
+        this.shiftUp = function (el) {
             this.data.push(el);
-        }
-        this.shiftUp = function () {
             let count = this.data.length - 1;
-            console.log(count);
             while (count > 1 && this.data[count] > this.data[Math.floor(count / 2)]) {
                 wrap(this.data, count, Math.floor(count / 2));
                 count /= 2;
             }
             console.log(this.data);
         }
-        this.shiftDown = function () {
+        this.shiftDown = function (el) {
+            this.data.push(el);
             let count = this.data.length;
             wrap(this.data, 1, count - 1);
             this.data.length--;
-            console.log(this.data);
             let k = 1;
-            while (2 * k < this.data.length && this.data[k]<this.data[2*k]) {
+            while (2 * k < this.data.length && this.data[k] < this.data[2 * k]) {
                 let j = 2 * k;
-                if(j+1 <= count - 1 && this.data[j+1] > this.data[j]){
+                if (j + 1 <= count - 1 && this.data[j + 1] > this.data[j]) {
                     j += 1;
                 }
-                wrap(this.data,k,j);
+                wrap(this.data, k, j);
                 k = j;
             }
-            console.log(this.data);
         }
     }
 
-    let maxheap = new MaxHeap([10, 9, 8, 6, 5, 4, 3, 2, 1]);
-    maxheap.addel(1);
-    maxheap.shiftDown();
+    //    let maxheap = new MaxHeap([10, 9, 8, 6, 5, 4, 3, 2, 1, 1]);
+    //    maxheap.addel(1);
+    //    maxheap.shiftDown();
+
+    function heapSort(arr) {
+        let maxheap = new MaxHeap([]);
+        console.log(maxheap.data)
+        for (let i = 0; i < arr.length; i++) {
+            maxheap.shiftUp(arr[i]);
+        }
+        maxheap.data = [''].concat(maxheap.data.slice(1).reverse());
+        console.log(maxheap.data)
+    }
+    heapSort([3, 2, 5, 7, 1])
 </script>
 </body>
 </html>
