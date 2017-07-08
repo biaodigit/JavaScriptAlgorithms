@@ -7,31 +7,33 @@
 </head>
 <body>
 <script>
-    function MaxHeap(n) {
-        this.data = [].concat(n);
-        this.data.splice(0, 0, '');
-
-        this.size = function () {
+    let maxHeap = {
+        data: [],
+        initArr: function (arr) {
+            Array.prototype.push.apply(this.data, arr)
+            this.data.splice(0, 0, '');
+        },
+        size: function () {
             return count;
-        }
-        this.isEmpty = function () {
+        },
+        isEmpty: function () {
             return count == 0;
-        }
-        this.shiftUp = function (el) {
-            this.data.push(el);
+        },
+        shiftUp: function (el) {
+            if (!el) {
+                return
+            }
+            this.data.push(el)
             let count = this.data.length - 1;
             while (count > 1 && this.data[count] > this.data[Math.floor(count / 2)]) {
                 wrap(this.data, count, Math.floor(count / 2));
-                count /= 2;
+                count = Math.floor(count / 2);
             }
-            console.log(this.data);
-        }
-        this.shiftDown = function (el) {
-            this.data.push(el);
+        },
+        shiftDown: function (k) {
             let count = this.data.length;
             wrap(this.data, 1, count - 1);
             this.data.length--;
-            let k = 1;
             while (2 * k < this.data.length && this.data[k] < this.data[2 * k]) {
                 let j = 2 * k;
                 if (j + 1 <= count - 1 && this.data[j + 1] > this.data[j]) {
@@ -40,23 +42,39 @@
                 wrap(this.data, k, j);
                 k = j;
             }
+            console.log(this.data)
+        },
+        heaPiFyShiftDown:function (k) {
+            let count = this.data.length;
+            wrap(this.data, 1, count - 1);
+            while (2 * k < this.data.length && this.data[k] < this.data[2 * k]) {
+                let j = 2 * k;
+                if (j + 1 <= count - 1 && this.data[j + 1] > this.data[j]) {
+                    j += 1;
+                }
+                wrap(this.data, k, j);
+                k = j;
+            }
+            console.log(this.data)
+        },
+        heaPiFy: function (arr) {
+            this.data.push('');
+            for(let i=0;i<arr.length;i++){
+                this.shiftUp(arr[i])
+            }
+            console.log(this.data)
+            this.data = [''].concat(this.data.slice(1).reverse())
+            let n = this.data.length,
+                count = n;
+            for (let i = Math.ceil(n / 2); i >= 1; i--) {
+                this.heaPiFyShiftDown(i)
+            }
+            console.log(this.data)
         }
     }
-
-    //    let maxheap = new MaxHeap([10, 9, 8, 6, 5, 4, 3, 2, 1, 1]);
-    //    maxheap.addel(1);
-    //    maxheap.shiftDown();
-
-    function heapSort(arr) {
-        let maxheap = new MaxHeap([]);
-        console.log(maxheap.data)
-        for (let i = 0; i < arr.length; i++) {
-            maxheap.shiftUp(arr[i]);
-        }
-        maxheap.data = [''].concat(maxheap.data.slice(1).reverse());
-        console.log(maxheap.data)
-    }
-    heapSort([3, 2, 5, 7, 1])
+//    maxHeap.initArr([10,9,8,7,6,5,3,2,1,1]);
+//    maxHeap.shiftDown(1);
+    maxHeap.heaPiFy([6,8,4,7,10,3,1])
 </script>
 </body>
 </html>
