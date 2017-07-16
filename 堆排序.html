@@ -66,33 +66,35 @@
         heapSort: function (arr) {
             let len = arr.length;
             Array.prototype.push.apply(this.data, arr)
-
-            for (let i = Math.floor((len - 1) / 2); i >= 0; i--) {
-                this._shiftDown(len, i)
-            }
+//
+//            for (let i = Math.floor((len - 1) / 2); i >= 0; i--) {
+//                this._shiftDown(len, i)
+//            }
+//            console.log(this.data)
             for (let i = len - 1; i > 0; i--) {
-                wrap(arr, 0, i)
+                wrap(this.data, 0, i)
+                console.log(this.data)
                 this._shiftDown(i, 0)
             }
         },
         _shiftDown(n, k) {
-
             while (2 * k + 1 < n) {
                 let j = 2 * k + 1;  //在此轮循环中，arr[k]和arr[j]交换位置
                 if (j + 1 < n && this.data[j + 1] > this.data[j]) {
                     j += 1;
                 }
-                if(arr[k] > arr[j]){
+                if(this.data[k] > this.data[j]){
                     break
                 }
                 wrap(this.data, k, j);
                 k = j;
+                console.log(this.data)
             }
         }
     }
     //    maxHeap.initArr([10,9,8,7,6,5,3,2,1,1]);
     //    maxHeap.shiftDown(1);
-    maxHeap.heaPiFy([6, 8, 4, 7, 10, 3, 1, 9])
+    maxHeap.heapSort([9,8,7,6,5,4,3,2,1,0])
 </script>
 </body>
 </html>
