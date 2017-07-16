@@ -13,12 +13,6 @@
             Array.prototype.push.apply(this.data, arr)
             this.data.splice(0, 0, '');
         },
-        size: function () {
-            return count;
-        },
-        isEmpty: function () {
-            return count == 0;
-        },
         shiftUp: function (el) {
             if (!el) {
                 return
@@ -44,7 +38,7 @@
             }
             console.log(this.data)
         },
-        heaPiFyShiftDown:function (k) {
+        heaPiFyShiftDown: function (k) {
             let count = this.data.length;
             wrap(this.data, 1, count - 1);
             while (2 * k < this.data.length && this.data[k] < this.data[2 * k]) {
@@ -55,26 +49,50 @@
                 wrap(this.data, k, j);
                 k = j;
             }
-            console.log(this.data)
         },
         heaPiFy: function (arr) {
             this.data.push('');
-            for(let i=0;i<arr.length;i++){
+            for (let i = 0; i < arr.length; i++) {
                 this.shiftUp(arr[i])
             }
-            console.log(this.data)
             this.data = [''].concat(this.data.slice(1).reverse())
-            let n = this.data.length,
-                count = n;
+            let n = this.data.length;
             for (let i = Math.ceil(n / 2); i >= 1; i--) {
+                console.log(i);
                 this.heaPiFyShiftDown(i)
             }
             console.log(this.data)
+        },
+        heapSort: function (arr) {
+            let len = arr.length;
+            Array.prototype.push.apply(this.data, arr)
+
+            for (let i = Math.floor((len - 1) / 2); i >= 0; i--) {
+                this._shiftDown(len, i)
+            }
+            for (let i = len - 1; i > 0; i--) {
+                wrap(arr, 0, i)
+                this._shiftDown(i, 0)
+            }
+        },
+        _shiftDown(n, k) {
+
+            while (2 * k + 1 < n) {
+                let j = 2 * k + 1;  //在此轮循环中，arr[k]和arr[j]交换位置
+                if (j + 1 < n && this.data[j + 1] > this.data[j]) {
+                    j += 1;
+                }
+                if(arr[k] > arr[j]){
+                    break
+                }
+                wrap(this.data, k, j);
+                k = j;
+            }
         }
     }
-//    maxHeap.initArr([10,9,8,7,6,5,3,2,1,1]);
-//    maxHeap.shiftDown(1);
-    maxHeap.heaPiFy([6,8,4,7,10,3,1])
+    //    maxHeap.initArr([10,9,8,7,6,5,3,2,1,1]);
+    //    maxHeap.shiftDown(1);
+    maxHeap.heaPiFy([6, 8, 4, 7, 10, 3, 1, 9])
 </script>
 </body>
 </html>
