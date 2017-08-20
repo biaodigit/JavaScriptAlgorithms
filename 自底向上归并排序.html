@@ -37,7 +37,8 @@
         let len = arr.length;
         //sz是待归并数组的长度
         for(let sz = 1; sz <= len; sz += sz) {
-           for(let i = 0; i + sz < len; i += sz + sz) {
+           //起始元素位置
+           for(let i = 0; i + sz <= len; i += sz + sz) {
                //对arr[i....i+size-1]和arr[i+sz.....i+2*sz-1]归并循环
                _merge(arr, i, i + sz -1, Math.min(i + sz + sz - 1,len-1));
            }
