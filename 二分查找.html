@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //    二分查找法，在有序数组中查找target
+    //    如果找到target,返回对应的索引index，没有则返回-1
+    let binarySearch = (arr, n, target) => {
+        //在[l....r]中寻找
+        let [l, r] = [0, n - 1];
+        while (l <= r) {
+            let mid = l + Math.floor((r - l) / 2)
+            console.log(l, r)
+            if (arr[mid] === target) {
+                return mid
+            }
+
+            //在arr[l....mid-1]中查找target
+            if (target < arr[mid]) {
+                r = mid - 1
+            } else {
+                //在arr[mid+1....r]中查找target
+                l = mid + 1
+            }
+        }
+
+        return -1
+
+    }
+
+    //使用递归实现二分查找
+    let binarySearch2 = (arr, target, l, r) => {
+        let mid = Math.floor(l + (r - l) / 2);
+        if (l <= r) {
+            if (target === arr[mid]) {
+                return mid;
+            } else if (target > arr[mid]) {
+                return binarySearch2(arr, target, mid + 1, r);
+            } else {
+                return binarySearch2(arr, target, l, mid - 1);
+            }
+        }
+
+        return -1;
+    }
+    
+    console.log(binarySearch([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, 4))
+    console.log(binarySearch2([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2, 0, 9))
+
+</script>
+</body>
+</html>
