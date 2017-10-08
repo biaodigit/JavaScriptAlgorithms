@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function LinkerList() {
+        let Node = function (element) {
+            this.element = element
+            this.next = null
+        }
+        //初始化链表长度
+        let length = 0;
+        //初始化第一个元素
+        let head = null;
+        this.append = function(element){
+            //初始化添加的Node实例
+            let node = new Node(element),
+                current;
+            if (head === null){
+                //第一个Node实例进入链表，之后在这个LinkedList实例中head就不再是null了
+                head = node;
+            } else {
+                current = head;
+                //循环链表知道找到最后一项，循环结束current指向链表最后一项元素
+                while(current.next){
+                    current = current.next;
+                }
+                //找到最后一项元素后，将他的next属性指向新元素node,j建立链接
+                current.next = node;
+            }
+            //更新链表长度
+            length++;
+        };
+    }
+
+
+</script>
+</body>
+</html>
