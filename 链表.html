@@ -34,7 +34,7 @@
             //更新链表长度
             length++;
         };
-
+        //删除
         this.remove = function (position) {
             if (position >= 0 && position <= length) {
                 var current = head,
@@ -59,7 +59,7 @@
                 return null
             }
         };
-
+        //插入
         this.insert = function (position, element) {
             if (position >= 0 && position <= length) {
                 let node = new Node(element),
@@ -85,7 +85,7 @@
                 return null
             }
         };
-        
+        //获取位置
         this.indexOf = function (element) {
             let current = head,
                 index = 0
@@ -100,6 +100,18 @@
 
             return -1
         };
+        //判断是否为空
+        this.isEmpty = function () {
+            return length === 0
+        };
+        //返回长度
+        this.getLength = function () {
+            return length
+        }
+        //返回头部
+        this.getHead = function () {
+            return head
+        }
     }
 
 
