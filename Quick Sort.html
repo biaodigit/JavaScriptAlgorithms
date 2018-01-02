@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    function quickSort(arr) {
+        let len = arr.length
+        _quickSort(arr, 0, len - 1)
+        console.log(arr)
+    }
+
+    function _quickSort(arr, l, r) {
+        if (l >= r) {
+            return
+        }
+        let p = _partition(arr, l, r)
+        _quickSort(arr, l, p - 1)
+        _quickSort(arr, p + 1, r)
+    }
+
+    function _partition(arr, l, r) {
+        let v = arr[l],
+            j = l;
+        for (let i = l + 1; i <= r; i++) {
+            if (arr[i] < v) {
+                wrap(arr, i, ++j)
+            }
+        }
+        wrap(arr, l, j)
+        return j
+    }
+    quickSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+</script>
+</body>
+</html>
