@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    function threeWayQuickSort(arr) {
+        let len = arr.length
+        _partition(arr, 0, len - 1)
+        console.log(arr)
+    }
+
+    function _partition(arr, l, r) {
+        if (l >= r) {
+            return
+        }
+        let v = arr[l];
+        let lt = l;
+        let gt = r + 1;
+        let i = l + 1;
+        while (i < gt) {
+            if (arr[i] < v) {
+                wrap(arr, i, lt + 1);
+                lt++;
+                i++;
+            } else if (arr[i] === v) {
+                i++;
+            } else {
+                wrap(arr, i, gt - 1);
+                gt--;
+            }
+        }
+        wrap(arr, l, lt)
+        _partition(arr, l, lt - 1)
+        _partition(arr, gt, r)
+    }
+
+    threeWayQuickSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+</script>
+</body>
+</html>
