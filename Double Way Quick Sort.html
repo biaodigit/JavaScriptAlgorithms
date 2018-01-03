@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    function DoubleWayQuickSort(arr) {
+        let len = arr.length
+        _quickSort(arr, 0, len - 1)
+        console.log(arr)
+    }
+
+    function _quickSort(arr, l, r) {
+        if (l >= r) {
+            return
+        }
+
+        let p = _partition(arr, l, r)
+        _quickSort(arr, l, p - 1)
+        _quickSort(arr, p + 1, r)
+    }
+
+    function _partition(arr, l, r) {
+        let v = arr[l],
+            i = l + 1,
+            j = r;
+        while (true) {
+            while (i <= r && arr[i] < v) {
+                i++
+            }
+            while (j >= l && arr[j] > v) {
+                j--
+            }
+            if (i > j) {
+                break
+            }
+            wrap(arr, i, j);
+            i++;
+            j--;
+        }
+        wrap(arr, l, j)
+        return j
+    }
+    DoubleWayQuickSort([3, 1, 3, 5, 4, 4, 4, 7, 2, 4, 9, 4, 4, 6, 10, 8])
+</script>
+</body>
+</html>
