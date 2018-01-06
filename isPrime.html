@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function isPrime(num) {
+        if (num === 0 || num === 1) {
+            return
+        }
+        if (num < 0) {
+            num = Math.abs(num)
+        }
+        for (let i = 2; i * i <= num; i++) {
+            if (num % 2 === 0) {
+                return false
+            }
+        }
+        return true
+    }
+
+    console.log(isPrime(-4))
+</script>
+</body>
+</html>
