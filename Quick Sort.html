@@ -13,15 +13,6 @@
         console.log(arr)
     }
 
-    function _quickSort(arr, l, r) {
-        if (l >= r) {
-            return
-        }
-        let p = _partition(arr, l, r)
-        _quickSort(arr, l, p - 1)
-        _quickSort(arr, p + 1, r)
-    }
-
     function _partition(arr, l, r) {
         let v = arr[l],
             j = l;
@@ -33,7 +24,73 @@
         wrap(arr, l, j)
         return j
     }
+
+    /**
+     * 递归方式
+     * @param arr
+     * @param l
+     * @param r
+     * @private
+     */
+    function _quickSort(arr, l, r) {
+        if (l >= r) {
+            return
+        }
+        let p = _partition(arr, l, r)
+        _quickSort(arr, l, p - 1)
+        _quickSort(arr, p + 1, r)
+    }
+
     quickSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+
+    /**
+     * 非递归方式
+     * @param arr
+     * @param l
+     * @param r
+     * @private
+     */
+    function nonRecQuickSort(arr) {
+        var stack = [],
+            start = 0,
+            end = arr.length - 1;
+        if (start < end) {
+            stack.push(end)
+            stack.push(start)
+            while (stack.length) {
+                var l = stack.pop()
+                var r = stack.pop()
+                var index = _partition(arr, l, r)
+                if (r > index + 1) {
+                    stack.push(r)
+                    stack.push(index + 1)
+                    console.log(stack)
+                }
+                if (l < index - 1) {
+                    stack.push(index - 1)
+                    stack.push(l)
+                }
+            }
+        }
+        return arr
+    }
+
+    function partition(arr, l, r) {
+        var v = arr[l]
+        while (l < r) {
+            while (l < r && arr[r] >= v) {
+                r--
+            }
+            arr[l] = arr[r]
+            while (l < r && arr[l] <= v) {
+                l++
+            }
+            arr[r] = arr[l]
+        }
+        arr[l] = v
+        return l
+    }
+    console.log(nonRecQuickSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8]))
 </script>
 </body>
 </html>

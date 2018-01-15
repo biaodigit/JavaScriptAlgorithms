@@ -32,6 +32,13 @@
         }
     }
 
+    /**
+     * 递归方式
+     * @param arr
+     * @param l
+     * @param r
+     * @private
+     */
     function _mergeSort(arr, l, r) {
         if (l >= r) {
             return
@@ -48,8 +55,54 @@
         console.log(arr)
     }
 
+    /**
+     * 非递归方式
+     * @param arr
+     * @param l
+     * @param r
+     * @private
+     */
+    function nonRecMergeSort(arr) {
+        var stack = [],
+            res = [],
+            start = 0,
+            end = arr.length - 1;
+        if (start < end) {
+            stack.push(end)
+            stack.push(start)
+            res.push(end)
+            res.push(start)
+            while (stack.length) {
+                var l = stack.pop()
+                var r = stack.pop()
+                var mid = l + Math.floor((r - l) / 2)
+                if (mid + 1 < r) {
+                    stack.push(r)
+                    res.push(r)
+                    stack.push(mid+1)
+                    res.push(mid+1)
+                }
+                if (l < mid ) {
+                    stack.push(mid)
+                    res.push(mid)
+                    stack.push(l)
+                    res.push(l)
+
+                }
+            }
+        }
+        while (res.length) {
+            var ls = res.pop()
+            var rs = res.pop()
+            var mids = ls + Math.floor((rs - ls) / 2)
+            _merge(arr, ls, mids, rs)
+        }
+        console.log(arr)
+    }
+
 
     mergeSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+    nonRecMergeSort([3, 1, 5, 7, 2, 4, 9,11, 6, 12, 10, 8])
 </script>
 </body>
 </html>
