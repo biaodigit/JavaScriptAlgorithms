@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Node(val) {
+        this.val = val
+        this.next = null
+        this.previous = null
+    }
+
+    class DoubleLoopList {
+        constructor() {
+            this.head = null
+            this.tail = null
+            this.length = null
+        }
+
+        append(element) {
+            let node = new Node(element),
+                previous,
+                current;
+            if (!this.head) {
+                this.head = node
+                this.tail = node
+                this.head.previous = this.tail
+                this.tail.next = this.head
+            } else {
+                current = this.head
+                while (current.next !== this.head) {
+                    previous = current
+                    current = current.next
+                }
+                current.next = node
+                node.next = this.head
+                node.previous = current
+                this.tail = node
+                this.head.previous = node
+            }
+            this.length++
+        }
+
+        insert(position, element) {
+            if (position > -1) {
+                let node = new Node(element),
+                    current = this.head,
+                    previous,
+                    index = 0;
+                if (!current) {
+                    this.head = node
+                    this.tail = node
+                    this.head.next = this.tail
+                    this.tail.previous = this.head
+                    this.loop()
+                } else {
+                    if (position === 0) {
+                        node.next = current
+                        current.previous = node
+                        node.previous = this.tail
+                        this.head = node
+                        this.tail.next = this.head
+                    } else if (position !== 0 && position < this.length) {
+                        while (index++ < position) {
+                            previous = current
+                            current = current.next
+                        }
+                        node.next = current
+                        current.previous = node
+                        previous.next = node
+                        node.previous = previous
+                    } else {
+                        previous = this.tail
+                        previous.next = node
+                        node.previous = previous
+                        node.next = this.head
+                        this.head.previous = node
+                        this.tail = node
+                    }
+                }
+            }
+            this.length++
+        }
+
+        remove(element) {
+            let node = this.find(element),
+                current = this.head,
+                previous,
+                tail = this.tail;
+            if (node.val !== element) {
+                return false
+            }
+            if (node === current) {
+                this.head = node.next
+                this.loop()
+            } else if (node === tail) {
+                this.tail = node.previous
+                this.loop()
+            } else {
+                while (current.val !== element) {
+                    previous = current
+                    current = current.next
+                }
+                previous.next = current.next
+                current.next.previous = previous
+            }
+
+            this.length--
+        }
+
+        removeAt(element) {
+            let current = this.head,
+                index = 0,
+                previous;
+            if (index === element) {
+                if (this.length === 1) {
+                    this.head = null
+                    this.tail = null
+                } else {
+                    this.head = current.next
+                    this.loop()
+                }
+            } else if (element === this.length - 1) {
+                previous = this.tail.previous
+                this.tail = previous
+                this.loop()
+            } else {
+                while (index++ < element) {
+                    previous = current
+                    current = current.next
+                }
+                previous.next = current.next
+                current.next.previous = previous
+            }
+            this.length--
+        }
+
+        find(item) {
+            let current = this.head
+            while (current.val !== item && current.next) {
+                current = current.next
+            }
+            return current
+        }
+
+        loop() {
+            this.head.previous = this.tail
+            this.tail.next = this.head
+        }
+    }
+
+    let list = new DoubleLoopList()
+    list.append(1)
+    list.append(2)
+    list.append(3)
+    //    list.append(4)
+    //    list.remove(3)
+    list.removeAt(1)
+    list.append(4)
+    console.log(list)
+</script>
+</body>
+</html>

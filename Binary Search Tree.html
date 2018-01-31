@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let Node = (key, value) => {
+        this.key = key
+        this.value = value
+        this.right = null
+        this.left = null
+    }
+
+    class BST {
+        constructor(key, value) {
+            // TODO
+            this.root = null
+            this.count = 0
+        }
+
+        size() {
+            return this.count
+        }
+
+        isEmpty() {
+            return this.count === 0
+        }
+
+        insert(key, value) {
+            this.root = this._insert(this.root, key, value)
+        }
+
+        _insert(node, key, value) {
+            if (!node) {
+                this.count++
+                return new Node(key, value)
+            }
+            if (key === node.key)
+                node.key = value
+            else if (key < node.key)
+                node.left = this._insert(node.left, key, value)
+            else
+                node.right = this._insert(node.right, key, value)
+
+        }
+
+        contain(key) {
+            return this._contain(this.root, key)
+        }
+
+        _contain(node, key) {
+            if (node.key === key) {
+                return true
+            } else if (node.key > key) {
+                return this._contain(node.left, key)
+            } else {
+                return this._contain(node.right, key)
+            }
+        }
+    }
+
+
+</script>
+</body>
+</html>

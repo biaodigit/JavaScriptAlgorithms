@@ -11,11 +11,11 @@
         var len = arr.length
         for (var i = 0; i < len - 1; i++) {
             for (var j = 1; j < len - i; j++) {
-                if (arr[j] < arr[j - 1]) {
-                    wrap(arr, j, j - 1)
-                    console.log(arr)
+                if (arr[j - 1] > arr[j]) {
+                    wrap(arr, j - 1, j)
                 }
             }
+            console.log(arr)
         }
         console.log(arr)
     }

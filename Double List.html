@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Node(val) {
+        this.val = val
+        this.next = null
+        this.previous = null
+    }
+
+    class List {
+        constructor() {
+            this.head = null
+            this.tail = null
+            this.length = 0
+        }
+
+        append(newElement) {
+            let node = new Node(newElement)
+            if (!this.head) {
+                this.head = node
+                this.tail = node
+            } else {
+                this.tail.next = node
+                node.previous = this.tail
+                this.tail = node
+            }
+            this.length++
+        }
+
+        insert(position, newElement) {
+            if (position > -1) {
+                let node = new Node(newElement),
+                    current = this.head,
+                    previous,
+                    index = 0;
+                if (!current) {
+                    this.head = node
+                    this.tail = node
+                } else {
+                    if (position === 0) {
+                        node.next = current
+                        current.previous = node
+                        this.head = node
+                    } else if (position !== 0 && position < this.length) {
+                        while (index++ < position) {
+                            previous = current
+                            current = current.next
+                        }
+                        node.next = current
+                        current.previous = node
+                        node.previous = previous
+                        previous.next = node
+                    } else {
+                        this.tail.next = node
+                        node.previous = this.tail
+                        this.tail = node
+                    }
+                }
+                this.length++
+            }
+        }
+
+        find(item) {
+            let cur = this.head
+            while (cur.val !== item) {
+                cur = cur.next
+            }
+            return cur
+        }
+
+        remove(item) {
+            let node = this.find(item),
+                current = this.head;
+            if (!node) {
+                return false
+            }
+            if (node === current) {
+                this.head = current.next
+                this.head.previous = null
+            } else {
+                if (node.next) {
+                    node.previous.next = node.next
+                    node.next.previous = node.previous
+                } else {
+                    node.previous.next = null
+                }
+            }
+            node.next = null
+            node.previous = null
+            node.val = null
+            this.length--
+        }
+
+        removeAt(position) {
+            if (position > -1 && position < this.length) {
+                let current = this.head,
+                    previous,
+                    index = 0;
+                if (position === 0) {
+                    if (this.length === 1) {
+                        this.head = null
+                        this.tail = null
+                    } else {
+                        current.next.previous = null
+                        this.head = current.next
+                    }
+                } else if (position === this.length - 1) {
+                    current = this.tail
+                    this.tail = current.previous
+                    this.tail.next = null
+                } else {
+                    while (index++ < position) {
+                        previous = current
+                        current = current.next
+                    }
+                    previous.next = current.next
+                    current.next.previous = previous
+                }
+                this.length--
+            }
+        }
+
+        findLast() {
+            let node = this.head
+            while (node.next) {
+                node = node.next
+            }
+            return node
+        }
+    }
+
+    let list = new List()
+    list.append(1)
+    list.append(2)
+    list.append(3)
+    list.remove(1)
+    console.log(list)
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    Array.prototype.copyReverse = function (n) {
+        var arr = this;
+        var ret = arr.slice(0)
+        ret.reverse().shift()
+        arr = arr.concat(ret)
+        n = n - 1
+        while (n--) {
+            var newRet = arr.slice(0)
+            newRet.shift()
+            arr = arr.concat(newRet)
+        }
+        return arr
+    }
+    console.log([1, 2, 3, 4, 5].copyReverse(2))
+</script>
+</body>
+</html>
