@@ -15,7 +15,6 @@
 
     class BST {
         constructor(key, value) {
-            // TODO
             this.root = null
             this.count = 0
         }
@@ -53,10 +52,71 @@
         _contain(node, key) {
             if (node.key === key) {
                 return true
-            } else if (node.key > key) {
+            } else if (node.left && node.key > key) {
                 return this._contain(node.left, key)
-            } else {
+            } else if (node.right && node.key < key) {
                 return this._contain(node.right, key)
+            }
+            return false
+        }
+
+        search(key) {
+            return this._search(this.root, key)
+        }
+
+        _search(node, key) {
+            if (node === null) return null
+
+            if (node.key === key) {
+                return node.value
+            } else if (node.left && node.key > key) {
+                return this._search(node.left, key)
+            } else if (node.right && node.key < key) {
+                return this._search(node.right, key)
+            }
+            return null
+        }
+
+        preOrder(node) {
+            if (node !== null) {
+                console.log(node.key)
+                this.preOrder(node.left)
+                this.preOrder(node.right)
+            }
+        }
+
+        inOrder(node) {
+            if (node !== null) {
+                this.inOrder(node.left)
+                console.log(node.key)
+                this.inOrder(node.right)
+            }
+        }
+
+        postOrder(node) {
+            if (node !== null) {
+                this.postOrder(node.left)
+                this.postOrder(node.right)
+                console.log(node.key)
+            }
+        }
+
+        destroy(node) {
+            if (node) {
+                this.destroy(node.left)
+                this.destroy(node.right)
+                node = null
+            }
+        }
+
+        levelOrder() {
+            let queue = []
+            queue.push(this.root)
+            while (queue.length) {
+                let node = queue.shift()
+                console.log(node.key)
+                if (node.left) queue.push(node.left)
+                if (node.right) queue.push(node.right)
             }
         }
     }
