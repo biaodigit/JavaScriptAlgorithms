@@ -8,27 +8,19 @@
 <script>
     let knapsack01 = (weights, values, C) => {
         let n = weights.length,
-            f = [[]];
-        for (let j = 0; j <= C; j++) {
-            if(j >= weights[0]){
-                f[0][j] = values[0]
-            }else{
-                f[0][j] = 0
-            }
-        }
+            f = new Array(C + 1).fill(-1);
         //i:物品编号，j:限重
+        for (let i = 0; i <= C; i++) {
+            f[i] = i >= weights[0] ? values[0] : 0
+        }
         for (let i = 1; i < n; i++) {
-            for (let j = 0; j <= C; j++) {
-                if (!f[i]) f[i] = []
-                f[i][j] = f[i - 1][j]
-                if (j >= weights[i]) {
-                    f[i][j] = Math.max(f[i][j], values[i] + f[i - 1][j - weights[i]])
-                }
+            for (let j = C; j >= weights[i]; j--) {
+                f[j] = Math.max(f[j], values[i] + f[j - weights[i]])
             }
         }
-        return f[n - 1][C]
+        return f[C]
     }
-    console.log(knapsack01([2,2,6,5,4],[6,3,5,4,6],10))
+    console.log(knapsack01([2, 2, 6, 5, 4], [6, 3, 5, 4, 6], 10))
 </script>
 </body>
 </html>
