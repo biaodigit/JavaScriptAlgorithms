@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Node(key, value) {
+        this.key = key
+        this.value = value
+        this.next = null
+    }
+
+    function HashMap() {
+        this.res = []
+    }
+
+    HashMap.prototype.add = function (key, value) {
+        let node = new Node(key, value)
+        let hashKey = key.charCodeAt(0) % 10
+        if (!this.res[hashKey]) {
+            this.res[hashKey] = node
+        } else {
+            let pNode = this.res[hashKey]
+            while (pNode.next) {
+                pNode = pNode.next
+            }
+            pNode.next = node
+        }
+    }
+
+    HashMap.prototype.find = function (key, value) {
+        let hashKey = key.charCodeAt(0) % 10
+        let pNode = this.res[hashKey]
+        if (!pNode) {
+            return false
+        } else {
+            while (pNode) {
+                if (pNode.key === key && pNode.value === value) {
+                    return pNode
+                }
+                pNode = pNode.next
+            }
+            return false
+        }
+    }
+
+    HashMap.prototype.remove = function (key, value) {
+        let hashKey = key.charCodeAt(0) % 10
+        let pNode = this.res[hashKey]
+        if (!pNode) {
+            return false
+        } else {
+            if (key === pNode.key && value === pNode.value) {
+                let next = pNode.next
+                this.res[hashKey] = next
+            } else {
+                let pre = pNode,
+                    node = pNode.next
+                while (node) {
+                    if (node.key === key && node.value === value) {
+                        pre.next = node.next
+                        node = null
+                        return true
+                    }
+                    node = node.next
+                    pre = pre.next
+
+                }
+                return false
+            }
+        }
+    }
+</script>
+</body>
+</html>
