@@ -17,7 +17,6 @@
     }
 
     HashMap.prototype.add = function (key, value) {
-        let node = new Node(key, value)
         let hashKey = key.charCodeAt(0) % 10
         if (!this.res[hashKey]) {
             this.res[hashKey] = node
@@ -31,8 +30,7 @@
     }
 
     HashMap.prototype.find = function (key, value) {
-        let hashKey = key.charCodeAt(0) % 10
-        let pNode = this.res[hashKey]
+        let pNode = this.contain(key, value)
         if (!pNode) {
             return false
         } else {
@@ -47,8 +45,7 @@
     }
 
     HashMap.prototype.remove = function (key, value) {
-        let hashKey = key.charCodeAt(0) % 10
-        let pNode = this.res[hashKey]
+        let pNode = this.contain(key, value)
         if (!pNode) {
             return false
         } else {
@@ -71,6 +68,12 @@
                 return false
             }
         }
+    }
+
+    HashMap.prototype.contain = function (key, value) {
+        let hashKey = key.charCodeAt(0) % 10
+        let pNode = this.res[hashKey]
+        return pNode
     }
 </script>
 </body>
