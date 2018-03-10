@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function findMaxGroup(arr) {
+        if (!arr) return 0
+        if (arr.length <= 2) return Math.min(arr[0], arr[1])
+        let temp = [],
+            res = [],
+            max = 0,
+            k = 1;
+        res[0] = Math.min(arr[0], arr[1])
+        for (let i = 3; i < arr.length; i += 2) {
+            for (let j = 0; j < i; j++) {
+                for (let n = j + 1; n <= i; n++) {
+                    temp.push([arr[j], arr[n]])
+                }
+            }
+            for (let i = 0; i < temp.length; i++) {
+                max = Math.max(max, Math.min.apply(null, temp[i]))
+            }
+            res[k] = max + res[k - 1]
+            temp = []
+            max = 0
+            k++
+        }
+        return res[res.length - 1]
+    }
+
+    console.log(findMaxGroup([1, 4, 3, 2, 7, 5]))
+</script>
+</body>
+</html>
