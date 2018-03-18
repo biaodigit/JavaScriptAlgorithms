@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * 寻找无序数组中一个数符合前面的数都比它小后面的数都比它大条件
+     */
+    let findLeftLTAndRightGt = function (arr) {
+        let len = arr.length,
+            leftToRightMax = new Array(len),
+            rightToLeftMin = new Array(len);
+        for (let i = 0; i < len; i++) {
+            if (i === 0) {
+                leftToRightMax[i] = arr[i]
+            } else {
+                leftToRightMax[i] = Math.max(arr[i], leftToRightMax[i - 1])
+            }
+        }
+        for (let i = len - 1; i >= 0; i--) {
+            if (i === len - 1) {
+                rightToLeftMin[i] = arr[i]
+            } else {
+                rightToLeftMin[i] = Math.min(arr[i], rightToLeftMin[i + 1])
+            }
+        }
+
+        let j = 0,
+            res = []
+        while(j < len){
+            if(leftToRightMax[j] === rightToLeftMin[j]){
+                res.push(leftToRightMax[j])
+            }
+            j++
+        }
+        return res
+    }
+</script>
+</body>
+</html>
