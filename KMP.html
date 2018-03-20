@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KMP</title>
+</head>
+<body>
+<script>
+    // 未完待续.....
+    function kmp(str, pstr) {
+        let next = [],
+            i = 0,
+            j = 0
+        while (i < str.length && j < pstr.length) {
+            if(j === -1 || str.charAt(i) === pstr.charAt(j)){
+                i++,j++
+            }else{
+                j = next[j]
+            }
+        }
+    }
+</script>
+</body>
+</html>
