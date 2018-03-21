@@ -6,19 +6,42 @@
 </head>
 <body>
 <script>
-    // 未完待续.....
-    function kmp(str, pstr) {
-        let next = [],
-            i = 0,
-            j = 0
-        while (i < str.length && j < pstr.length) {
-            if(j === -1 || str.charAt(i) === pstr.charAt(j)){
-                i++,j++
-            }else{
-                j = next[j]
+    function cal_next(str, next, len) {
+        let k = -1
+        next[0] = -1
+        for (let q = 1; q < len; q++) {
+            while (k > -1 && str[k + 1] !== str[q]) {
+                k = next[k]
             }
+            if (str[k + 1] === str[q]) {
+                k++
+            }
+            next[q] = k
         }
     }
+    function kmp(str, pstr) {
+        let slen = str.length,
+            plen = pstr.length,
+            k = -1,
+            next = new Array(plen),
+            res = [];
+        cal_next(pstr, next, plen)
+        for (let i = 0; i < slen; i++) {
+            while (k > -1 && pstr[k + 1] !== str[i]) {
+                k = next[k]
+            }
+            if (pstr[k + 1] === str[i]) {
+                k++
+            }
+            if (k === plen - 1) {
+                res.push(i - plen + 1)
+                k = -1
+            }
+        }
+        return res.length ? res : -1
+    }
+
+    console.log(kmp("bacbababadababacambabacaddababacasdsd","ababaca"))
 </script>
 </body>
 </html>
