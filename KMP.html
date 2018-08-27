@@ -6,42 +6,43 @@
 </head>
 <body>
 <script>
-    function cal_next(str, next, len) {
-        let k = -1
-        next[0] = -1
-        for (let q = 1; q < len; q++) {
-            while (k > -1 && str[k + 1] !== str[q]) {
-                k = next[k]
+    function calNext(str, len, next) {
+        let i = 0,
+            j = -1;
+        next[0] = -1;
+        while (i < len) {
+            if (j === -1 || str[j] === str[i]) {
+                next[++i] = ++j;
+            } else {
+                j = next[j];
             }
-            if (str[k + 1] === str[q]) {
-                k++
-            }
-            next[q] = k
         }
-    }
+    };
+
     function kmp(str, pstr) {
         let slen = str.length,
             plen = pstr.length,
-            k = -1,
+            i = 0,
+            j = 0,
             next = new Array(plen),
             res = [];
-        cal_next(pstr, next, plen)
-        for (let i = 0; i < slen; i++) {
-            while (k > -1 && pstr[k + 1] !== str[i]) {
-                k = next[k]
+        calNext(pstr, plen, next);
+        while (i < slen && j < plen) {
+            if (j === -1 || str[i] === pstr[j]) {
+                i++;
+                j++;
+            } else {
+                j = next[j];
             }
-            if (pstr[k + 1] === str[i]) {
-                k++
-            }
-            if (k === plen - 1) {
-                res.push(i - plen + 1)
-                k = -1
+            if (j === plen) {
+                res.push(i - j);
+                j = 0
             }
         }
-        return res.length ? res : -1
+        return res.length ? res : 0
     }
 
-    console.log(kmp("bacbababadababacambabacaddababacasdsd","ababaca"))
+    console.log(kmp("bacbababadababacambabacaddababacasdsd", "ababaca"))
 </script>
 </body>
 </html>
