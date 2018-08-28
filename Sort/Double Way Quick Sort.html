@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="SortTestHelper.js"></script>
+    <script src="../SortTestHelper.js"></script>
 </head>
 <body>
 <script>
@@ -34,9 +34,8 @@
             while (j >= l && arr[j] > v) {
                 j--
             }
-            if (i > j) {
-                break
-            }
+
+            if(i > j) break;
             wrap(arr, i, j);
             i++;
             j--;

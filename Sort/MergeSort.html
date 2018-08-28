@@ -17,16 +17,16 @@
         //[1,6,5,7]
         for (let k = l; k <= r; k++) {
             if (i > mid) {
-                arr[k] = aux[j - l]
+                arr[k] = aux[j - l];
                 j++
             } else if (j > r) {
-                arr[k] = aux[i - l]
+                arr[k] = aux[i - l];
                 i++
             } else if (aux[i - l] > aux[j - l]) {
-                arr[k] = aux[j - l]
+                arr[k] = aux[j - l];
                 j++
             } else {
-                arr[k] = aux[i - l]
+                arr[k] = aux[i - l];
                 i++
             }
         }
@@ -46,7 +46,8 @@
         let mid = Math.floor((l + r) / 2)
         _mergeSort(arr, l, mid)
         _mergeSort(arr, mid + 1, r)
-        _merge(arr, l, mid, r)
+        if (arr[mid] > arr[mid + 1])
+            _merge(arr, l, mid, r)
     }
 
     function mergeSort(arr) {
@@ -79,10 +80,10 @@
                 if (mid + 1 < r) {
                     stack.push(r)
                     res.push(r)
-                    stack.push(mid+1)
-                    res.push(mid+1)
+                    stack.push(mid + 1)
+                    res.push(mid + 1)
                 }
-                if (l < mid ) {
+                if (l < mid) {
                     stack.push(mid)
                     res.push(mid)
                     stack.push(l)
@@ -102,7 +103,7 @@
 
 
     mergeSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
-    nonRecMergeSort([3, 1, 5, 7, 2, 4, 9,11, 6, 12, 10, 8])
+    nonRecMergeSort([3, 1, 5, 7, 2, 4, 9, 11, 6, 12, 10, 8])
 </script>
 </body>
 </html>

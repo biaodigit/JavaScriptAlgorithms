@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    function bubbleSort(arr) {
+        let len = arr.length
+        for (let i = 0; i < len - 1; i++) {
+            for (let j = 1; j < len - i; j++) {
+                if (arr[j] < arr[j - 1]) {
+                    wrap(arr, j, j - 1)
+                }
+            }
+        }
+        console.log(arr)
+    }
+
+    bubbleSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+</script>
+</body>
+</html>

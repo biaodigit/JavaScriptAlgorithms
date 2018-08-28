@@ -6,10 +6,11 @@
 </head>
 <body>
 <script>
-    function mergeSortBo(arr) {
+    function mergeSortBottom(arr) {
         let len = arr.length;
         for (let sz = 1; sz <= len; sz += sz) {
             for (let i = 0; i + sz <= len; i += sz + sz) {
+                // 对arr[i...i+sz-1]和arr[i+sz.....i+2*sz-1]排序
                 _merge(arr, i, i + sz - 1, Math.min(i + sz + sz - 1, len - 1));
             }
         }
@@ -41,7 +42,7 @@
         console.log(arr)
     }
 
-    mergeSortBo([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+    mergeSortBottom([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
 </script>
 </body>
 </html>

@@ -7,15 +7,16 @@
 <body>
 <script>
     function calNext(str, len, next) {
-        let i = 0,
-            j = -1;
+        let j = -1;
         next[0] = -1;
-        while (i < len) {
-            if (j === -1 || str[j] === str[i]) {
-                next[++i] = ++j;
-            } else {
-                j = next[j];
+        for (let i = 1; i < len; i++) {
+            while (j > -1 && str[j + 1] !== str[i]) {
+                j = next[j]
             }
+            if (str[j + 1] === str[i]) {
+                j++
+            }
+            next[i] = j
         }
     };
 
@@ -23,20 +24,20 @@
         let slen = str.length,
             plen = pstr.length,
             i = 0,
-            j = 0,
+            j = -1,
             next = new Array(plen),
             res = [];
         calNext(pstr, plen, next);
-        while (i < slen && j < plen) {
-            if (j === -1 || str[i] === pstr[j]) {
-                i++;
-                j++;
-            } else {
-                j = next[j];
+        for (let i = 0; i < slen; i++) {
+            while (j > -1 && str[i] !== pstr[j + 1]) {
+                j = next[j]
             }
-            if (j === plen) {
+            if (str[i] === pstr[j + 1]) {
+                j++
+            }
+            if(j === plen - 1){
                 res.push(i - j);
-                j = 0
+                j = -1
             }
         }
         return res.length ? res : 0
