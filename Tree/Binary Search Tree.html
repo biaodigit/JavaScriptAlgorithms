@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let Node = (value) => {
+        this.value = value
+        this.right = null
+        this.left = null
+    }
+
+    class BST {
+        constructor(value) {
+            let node = new Node(value)
+            this.root = node
+            this.count = 0
+        }
+
+        size() {
+            return this.count
+        }
+
+        isEmpty() {
+            return this.count === 0
+        }
+
+        // version 1
+        insert(value) {
+            if (this.root === null) {
+                this.root = new Node(value)
+            } else {
+                this.root = this._insert(this.root, value)
+            }
+        }
+
+        _insert(node, value) {
+            if (node === null) {
+                return new Node(value)
+            }
+            if (node.value === value) {
+                return;
+            } else if (value < node.value) {
+                node.left = this._insert(node.left, value)
+            } else {
+                node.right = this._insert(node.right, value)
+            }
+            return node;
+        }
+
+        contain(value) {
+            return this._contain(this.root, value)
+        }
+
+        _contain(node, value) {
+            if (node === null) return false
+            if (node.value === value) {
+                return true
+            } else if (node.left && node.value > value) {
+                return this._contain(node.left, value)
+            } else if (node.right && node.value < value) {
+                return this._contain(node.right, value)
+            }
+        }
+
+        search(value) {
+            return this._search(this.root, value)
+        }
+
+        _search(node, value) {
+            if (node === null) return null
+
+            if (node.value === value) {
+                return node.value
+            } else if (node.left && node.value > value) {
+                return this._search(node.left, value)
+            } else if (node.right && node.value < value) {
+                return this._search(node.right, value)
+            }
+            return null
+        }
+
+        preOrder(node) {
+            if (node !== null) {
+                console.log(node.value)
+                this.preOrder(node.left)
+                this.preOrder(node.right)
+            }
+        }
+
+        inOrder(node) {
+            if (node !== null) {
+                this.inOrder(node.left)
+                console.log(node.value)
+                this.inOrder(node.right)
+            }
+        }
+
+        postOrder(node) {
+            if (node !== null) {
+                this.postOrder(node.left)
+                this.postOrder(node.right)
+                console.log(node.value)
+            }
+        }
+
+        destroy(node) {
+            if (node) {
+                this.destroy(node.left)
+                this.destroy(node.right)
+                node = null
+            }
+        }
+
+        levelOrder() {
+            let queue = []
+            queue.push(this.root)
+            while (queue.length) {
+                let node = queue.shift()
+                console.log(node.value)
+                if (node.left) queue.push(node.left)
+                if (node.right) queue.push(node.right)
+            }
+        }
+    }
+
+
+</script>
+</body>
+</html>
