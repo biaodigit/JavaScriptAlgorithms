@@ -10,6 +10,7 @@
         this.value = value
         this.right = null
         this.left = null
+        this.isFirst = false
     }
 
     class BST {
@@ -90,11 +91,91 @@
             }
         }
 
+        preOrderNR(node) {
+            if (!node) return;
+            let stack = [],
+                root;
+            stack.push(node);
+            while (stack.length) {
+                root = stack.pop();
+                if (root.right) stack.push(root.right);
+                if (root.left) stack.push(root.left);
+                console.log(root.value)
+            }
+        }
+
+        preOrderMorris(node) {
+            if (!node) return null;
+
+            let pre;
+            while (node) {
+                if (!node.left) {
+                    console.log(node.value);
+                    node = node.right;
+                } else {
+                    pre = node.left;
+                    while (pre.right && pre.right !== node) {
+                        pre = pre.right;
+                    }
+                    if (!pre.right) {
+                        console.log(node.value);
+                        pre.right = node;
+                        node = node.left;
+                    } else {
+                        pre.right = null;
+                        node = node.right;
+                    }
+                }
+            }
+        }
+
         inOrder(node) {
             if (node !== null) {
-                this.inOrder(node.left)
-                console.log(node.value)
+                this.inOrder(node.left);
+                console.log(node.value);
                 this.inOrder(node.right)
+            }
+        }
+
+        inOrderNR(node) {
+            if (!node) return
+            let stack = [],
+                root;
+            while (true) {
+                while (node) {
+                    stack.push(node);
+                    node = node.left
+                }
+
+                if (!stack.length) break;
+                root = stack.pop();
+                console.log(root.value);
+                root = root.right;
+            }
+        }
+
+        inOrderMorris(node) {
+            if (!node) return null;
+
+            let pre;
+            while (node) {
+                if (!node.left) {
+                    console.log(node.value)
+                    node = node.right
+                } else {
+                    pre = node.left
+                    while (pre.right && pre.right !== node) {
+                        pre = pre.right
+                    }
+                    if (!pre.right) {
+                        pre.right = node
+                        node = node.left
+                    } else {
+                        console.log(node.value)
+                        node = node.right
+                    }
+                }
+
             }
         }
 
@@ -103,6 +184,39 @@
                 this.postOrder(node.left)
                 this.postOrder(node.right)
                 console.log(node.value)
+            }
+        }
+
+        postOrderNR(node) {
+            if (!node) return;
+            let stack = [],
+                cur = null,
+                prev = null;
+            stack.push(node);
+            while (stack.length) {
+                cur = stack[stack.length - 1];
+                if (!prev || prev.left === cur || prev.right === cur) {
+                    if (cur.left) {
+                        stack.push(cur.left)
+                    } else if (cur.right) {
+                        stack.push(cur.right)
+                    } else {
+                        console.log(cur.value)
+                        stack.pop()
+                    }
+                } else if (cur.left === prev) {
+                    if (cur.right) {
+                        stack.push(cur.right)
+                    }
+                } else if (cur.right === prev) {
+                    console.log(cur.value)
+                    stack.pop()
+                } else {
+                    console.log(cur.value)
+                    stack.pop()
+                }
+                prev = cur
+
             }
         }
 
