@@ -238,9 +238,9 @@
             this.reverse(p1, p2);
 
             let pNode = p2;
-            while(true){
+            while (true) {
                 console.log(pNode.value);
-                if(pNode === p1) break;
+                if (pNode === p1) break;
                 pNode = pNode.right;
             }
 
@@ -281,14 +281,67 @@
             }
         }
 
+        miniNum() {
+            if (!this.root) return;
+            let node = this.root;
+            while (node) {
+                if (!node.left) {
+                    return node
+                }
+                node = node.left
+            }
+        }
+
+        removeMin(node) {
+            let pNode = node,
+                minNode = node.left,
+                rightNode = null;
+            while (minNode && minNode.left) {
+                pNode = pNode.left
+                minNode = minNode.left
+            }
+            if (minNode.right) {
+                rightNode = minNode.right
+            }
+            pNode.left = rightNode
+            return node;
+        }
+
+        maxNum() {
+            if (!this.root) return;
+            let node = this.root;
+            while (node) {
+                if (!node.right) {
+                    return node;
+                }
+                node = node.right
+            }
+        }
+
+        removeMax(node) {
+            let pNode = node,
+                maxNode = node.right,
+                leftNode = null;
+            while (maxNode && maxNode.right) {
+                pNode = pNode.right
+                maxNode = maxNode.right
+            }
+            if (maxNode.left) {
+                leftNode = maxNode.left
+            }
+            pNode.right = leftNode
+            return node;
+        }
+
+
         levelOrder() {
-            let queue = []
-            queue.push(this.root)
+            let queue = [];
+            queue.push(this.root);
             while (queue.length) {
-                let node = queue.shift()
-                console.log(node.value)
-                if (node.left) queue.push(node.left)
-                if (node.right) queue.push(node.right)
+                let node = queue.shift();
+                console.log(node.value);
+                if (node.left) queue.push(node.left);
+                if (node.right) queue.push(node.right);
             }
         }
     }
