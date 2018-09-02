@@ -28,7 +28,6 @@
             return this.count === 0
         }
 
-        // version 1
         insert(value) {
             if (this.root === null) {
                 this.root = new Node(value)
@@ -201,7 +200,7 @@
                     } else if (cur.right) {
                         stack.push(cur.right)
                     } else {
-                        console.log(cur.value)
+                        console.log(cur.value);
                         stack.pop()
                     }
                 } else if (cur.left === prev) {
@@ -209,14 +208,68 @@
                         stack.push(cur.right)
                     }
                 } else if (cur.right === prev) {
-                    console.log(cur.value)
+                    console.log(cur.value);
                     stack.pop()
                 } else {
-                    console.log(cur.value)
+                    console.log(cur.value);
                     stack.pop()
                 }
                 prev = cur
 
+            }
+        }
+
+        reverse(p1, p2) {
+            if (p1 === p2) return;
+
+            let x = p1,
+                y = p1.right,
+                temp;
+            while (true) {
+                temp = y.right;
+                y.right = x;
+                x = y;
+                y = temp;
+                if (x === p2) break;
+            }
+        }
+
+        printReverse(p1, p2) {
+            this.reverse(p1, p2);
+
+            let pNode = p2;
+            while(true){
+                console.log(pNode.value);
+                if(pNode === p1) break;
+                pNode = pNode.right;
+            }
+
+            this.reverse(p2, p1);
+        }
+
+        postOrderMorris(node) {
+            if (!node) return
+
+            let root = new Node(null),
+                pre;
+            root.left = node;
+            while (root) {
+                if (!root.left) {
+                    root = root.right;
+                } else {
+                    pre = root.left;
+                    while (pre.right && pre.right !== root) {
+                        pre = pre.right;
+                    }
+                    if (!pre.right) {
+                        pre.right = root;
+                        root = root.left;
+                    } else {
+                        this.printReverse(root.left, pre);
+                        pre.right = null;
+                        root = root.right
+                    }
+                }
             }
         }
 
