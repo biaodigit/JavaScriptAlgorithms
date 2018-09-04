@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../Sort/SortTestHelper.js"></script>
+</head>
+<body>
+<script>
+    class maxHeap {
+        constructor() {
+            this.data = [];
+        }
+
+        initArr(arr) {
+            Array.prototype.push.apply(this.data, arr);
+            this.data.splice(0, 0, '');
+            console.log(this.data)
+        }
+
+        insert(el) {
+            if (!el) return
+            this.data.push(el);
+            this.shiftUp()
+        }
+
+        shiftUp() {
+            let count = this.data.length - 1;
+            while (count > 1 && this.data[count] > this.data[Math.floor(count / 2)]) {
+                swap(this.data, count, Math.floor(count / 2));
+                count = Math.floor(count / 2);
+            }
+            console.log(this.data)
+        }
+
+        shiftDown(k) {
+            swap(this.data, 1, this.data.length - 1);
+            let count = this.data.length;
+            while (2 * k < this.data.length) {
+                let j = 2 * k;
+                if (j + 1 <= count - 1 && this.data[j + 1] > this.data[j]) {
+                    j += 1;
+                }
+                if (this.data[k] >= this.data[j]) return;
+
+                swap(this.data, k, j);
+
+                k = j;
+            }
+            console.log(this.data)
+        }
+
+        heaPiFyShiftDown(k) {
+            let count = this.data.length;
+            while (2 * k < this.data.length) {
+                let j = 2 * k;
+                if (j + 1 <= count - 1 && this.data[j + 1] > this.data[j]) {
+                    j += 1;
+                }
+                if (this.data[k] >= this.data[j]) return
+
+                swap(this.data, k, j);
+
+                k = j;
+            }
+        }
+
+        heaPiFy(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                this.data[i + 1] = arr[i]
+            }
+            let n = this.data.length;
+            for (let i = Math.floor(n / 2); i >= 1; i--) {
+                this.heaPiFyShiftDown(i)
+            }
+            console.log(this.data)
+        }
+
+        //原地堆排序
+        heapSort(arr) {
+            this.data = this.data.concat(arr);
+            let len = arr.length;
+            for (let i = Math.floor((len - 1) / 2); i >= 0; i--) {
+                this._shiftDown(arr, len, i)
+            }
+            for (let i = len - 1; i > 0; i--) {
+                swap(arr, 0, i);
+                this._shiftDown(arr, i, 0);
+            }
+        }
+
+        _shiftDown(arr, n, k) {
+            while (2 * k + 1 < n) {
+                let j = 2 * k + 1;  //在此轮循环中，arr[k]和arr[j]交换位置
+                if (j + 1 < n && arr[j + 1] > arr[j]) {
+                    j += 1;
+                }
+                if (arr[k] >= arr[j]) {
+                    break
+                }
+                swap(arr, k, j);
+                k = j;
+            }
+        }
+    }
+
+    maxHeap.initArr([10, 9, 8, 7, 6, 5, 3, 2, 1, 1]);
+    maxHeap.insert(8.5)
+    // maxHeap.shiftDown(1);
+    // maxHeap.heapSort([9,8,7,6,5,4,3,2,1,0])
+</script>
+</body>
+</html>
