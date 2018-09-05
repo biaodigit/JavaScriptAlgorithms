@@ -189,32 +189,22 @@
         postOrderNR(node) {
             if (!node) return;
             let stack = [],
-                cur = null,
-                prev = null;
-            stack.push(node);
+                currNode = node,
+                rightNode = null;
+            stack.push(currNode)
             while (stack.length) {
-                cur = stack[stack.length - 1];
-                if (!prev || prev.left === cur || prev.right === cur) {
-                    if (cur.left) {
-                        stack.push(cur.left)
-                    } else if (cur.right) {
-                        stack.push(cur.right)
-                    } else {
-                        console.log(cur.value);
-                        stack.pop()
-                    }
-                } else if (cur.left === prev) {
-                    if (cur.right) {
-                        stack.push(cur.right)
-                    }
-                } else if (cur.right === prev) {
-                    console.log(cur.value);
-                    stack.pop()
-                } else {
-                    console.log(cur.value);
-                    stack.pop()
+                while (currNode.left) {
+                    stack.push(currNode.left)
+                    currNode = currNode.left;
                 }
-                prev = cur
+                currNode = stack.pop()
+                while (!currNode.right || currNode.right === rightNode) {
+                    console.log(currNode.value)
+                    rightNode = currNode
+                    currNode = stack.pop()
+                }
+                stack.push(currNode)
+                currNode = currNode.right
 
             }
         }
@@ -249,7 +239,6 @@
 
         postOrderMorris(node) {
             if (!node) return
-
             let root = new Node(null),
                 pre;
             root.left = node;
@@ -281,9 +270,8 @@
             }
         }
 
-        miniNum() {
+        miniNum(node) {
             if (!this.root) return;
-            let node = this.root;
             while (node) {
                 if (!node.left) {
                     return node
@@ -307,9 +295,8 @@
             return node;
         }
 
-        maxNum() {
+        maxNum(node) {
             if (!this.root) return;
-            let node = this.root;
             while (node) {
                 if (!node.right) {
                     return node;
@@ -331,6 +318,35 @@
             }
             pNode.right = leftNode
             return node;
+        }
+
+        remove(node, e) {
+            this.root = this._remove(node, e)
+        }
+
+        _remove(node, e) {
+            if (!node) return null;
+
+            if (node.value > e.value) {
+                node.left = this._remove(node.left, e);
+            } else if (node.value < e.value) {
+                node.right = this._remove(node.right, e);
+            }else{
+                if(node.left === null){
+                    let rightNode = node.right;
+                    node.right = null;
+                    return rightNode;
+                }else if(node.right === null){
+                    let leftNode = node.left;
+                    node.left = null;
+                    return leftNode;
+                }
+                let successor = this.miniNum(node);
+                successor.right = this.removeMin(node.right);
+                successor.left = node.left;
+                node.left = node.right = null;
+                return successor;
+            }
         }
 
 
