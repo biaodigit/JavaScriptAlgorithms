@@ -5,7 +5,84 @@
     <title>BFPRT</title>
 </head>
 <body>
+<!--引入swap-->
+<script src="../Sort/SortTestHelper.js"></script>
 <script>
+    function main(arr, k) {
+        let kIndex = BFPRT(arr, 0, arr.length - 1, k);
+        console.log(`第${k}大元素所在索引：${kIndex}`);
+        console.log(`第${k}大元素${arr[kIndex]}`);
+        console.log(`排序后数组：[${arr}]`);
+    }
+
+    function BFPRT(arr, l, r, k) {
+        console.log(`l:${l},r:${r},k:${k}`);
+        let pivot_index = getPivotIndex(arr, l, r),
+            divide_index = partition(arr, l, r, pivot_index),
+            num = divide_index - l + 1;
+        console.log(`num:${num}`);
+        if (num === k) {
+            return divide_index;
+        } else if (num > k) {
+            return BFPRT(arr, l, divide_index - 1, k);
+        } else {
+            return BFPRT(arr, divide_index + 1, r, k - num);
+        }
+    }
+
+    function insertSort(arr, l, r) {
+        console.log(`起点：${l}, 终点${r}`)
+        console.log(`插入排序前：[${arr}]`)
+        for (let i = l + 1; i <= r; i++) {
+            let el = arr[i],
+                j;
+            for (j = i; j > l && arr[j - 1] < el; j--) {
+                arr[j] = arr[j - 1]
+            }
+            arr[j] = el
+        }
+        console.log(`中位数索引：${(r + l) >> 1}`)
+        return (r + l) >> 1;
+    }
+
+    function getPivotIndex(arr, l, r) {
+        if (r - l < 5) {
+            return insertSort(arr, l, r)
+        }
+        let sub_right = l - 1,
+            index = null;
+        for (let i = l; i + 4 <= r; i += 5) {
+            console.log(`排序前[${arr}]`)
+            index = insertSort(arr, i, i + 4);
+            console.log(`更换前[${arr}]`)
+            swap(arr, ++sub_right, index);
+            console.log(`更换后[${arr}]`)
+        }
+
+        return BFPRT(arr, l, sub_right, (sub_right - l >> 1) + 1)
+    }
+
+    function partition(arr, l, r, pivot_index) {
+        console.log(`partition l:${l},r:${r},index:${pivot_index}`)
+        console.log(`partition更换前[${arr}]`)
+        swap(arr, l, pivot_index);
+        console.log(`partition更换后[${arr}]`)
+        let j = l,
+            el = arr[l];
+        for (let i = l + 1; i <= r; i++) {
+            if (arr[i] > el) {
+                swap(arr, ++j, i);
+            }
+        }
+        console.log(`partition排序后[${arr}]`)
+        swap(arr, l, j);
+        console.log(`partition重新交交换后：[${arr}]`)
+        console.log(`排序后主元索引:${j}`)
+        return j
+    }
+
+    main([32, 153, 100, -50, -10, 6, 5, 1356, 20, 160, 2, 1432, 4, 50, 14, 102, -30, 3, 45, 1312, 1, -1, -3], 4)
+
 
 </script>
 </body>

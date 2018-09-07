@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>单调栈</title>
 </head>
 <body>
 <script>
     /**
      * 寻找无序数组中一个数符合前面的数都比它小后面的数都比它大条件
      */
-    let findLeftLTAndRightGt = function (arr) {
+    let monotonyStack = function (arr) {
         let len = arr.length,
             leftToRightMax = new Array(len),
             rightToLeftMin = new Array(len);
