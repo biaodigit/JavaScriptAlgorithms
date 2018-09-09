@@ -1,7 +1,7 @@
 /**
  * Created by di on 2017/6/10.
  */
-var wrap = function (arr, curr, min) {
+var swap = function (arr, curr, min) {
     var temp = arr[curr];
     arr[curr] = arr[min];
     arr[min] = temp;

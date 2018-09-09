@@ -8,15 +8,15 @@
 <body>
 <script>
     function selectSort(arr) {
-        let len = arr.length
+        let len = arr.length;
         for (let i = 0; i < len; i++) {
-            let minIndex = i
+            let minIndex = i;
             for (let j = i + 1; j < len; j++) {
                 if (arr[j] < arr[minIndex]) {
                     minIndex = j
                 }
             }
-            wrap(arr, i, minIndex)
+            swap(arr, i, minIndex)
         }
         console.log(arr)
     }

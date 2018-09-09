@@ -18,10 +18,10 @@
             j = l;
         for (let i = l + 1; i <= r; i++) {
             if (arr[i] < v) {
-                wrap(arr, i, ++j)
+                swap(arr, i, ++j)
             }
         }
-        wrap(arr, l, j)
+        swap(arr, l, j)
         return j
     }
 
@@ -36,12 +36,12 @@
         if (l >= r) {
             return
         }
-        let p = _partition(arr, l, r)
-        _quickSort(arr, l, p - 1)
-        _quickSort(arr, p + 1, r)
+        let p = _partition(arr, l, r);
+        _quickSort(arr, l, p - 1);
+        _quickSort(arr, p + 1, r);
     }
 
-    quickSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8])
+    quickSort([3, 1, 5, 7, 2, 4, 9, 6, 10, 8]);
 
     /**
      * 非递归方式
@@ -51,16 +51,16 @@
      * @private
      */
     function nonRecQuickSort(arr) {
-        var stack = [],
+        let stack = [],
             start = 0,
             end = arr.length - 1;
         if (start < end) {
             stack.push(end)
             stack.push(start)
             while (stack.length) {
-                var l = stack.pop()
-                var r = stack.pop()
-                var index = _partition(arr, l, r)
+                let l = stack.pop()
+                let r = stack.pop()
+                let index = _partition(arr, l, r);
                 if (r > index + 1) {
                     stack.push(r)
                     stack.push(index + 1)
@@ -76,7 +76,7 @@
     }
 
     function partition(arr, l, r) {
-        var v = arr[l]
+        let v = arr[l]
         while (l < r) {
             while (l < r && arr[r] >= v) {
                 r--

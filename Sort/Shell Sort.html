@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="SortTestHelper.js"></script>
+<script>
+    function shellSort(arr) {
+        let len = arr.length,
+            gap = Math.floor(len / 2);
+        while (gap > 0) {
+            for (let i = gap; i < len; i++) {
+                for (let j = i; j > 0; j -= gap) {
+                    if (arr[j - gap] > arr[j]) {
+                        swap(arr, j - gap, j)
+                    } else {
+                        break;
+                    }
+                }
+            }
+            gap = Math.floor(gap / 2);
+        }
+        return arr
+    }
+    shellSort([3, 10, 5, 7, 2, 4, 9, 6, 1, 8])
+</script>
+</body>
+</html>

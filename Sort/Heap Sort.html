@@ -9,7 +9,7 @@
 <script>
     function heapSort(arr) {
         let len = arr.length
-        for (let i = Math.floor((len - 1) / 2); i >= 0, i--) {
+        for (let i = Math.floor((len - 1) / 2); i >= 0; i--) {
             _shiftDown(arr, len, i)
         }
         for (let i = len - 1; i > 0; i--) {
