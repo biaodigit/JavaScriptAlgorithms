@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>索引堆</title>
+</head>
+<body>
+<script>
+    class IndexMaxHEap {
+        constructor(capatity) {
+            this.data = new Array(capatity + 1);
+            this.indexes = new Array(capatity + 1);
+            this.reverse = new Array(capatity + 1).fill(0);
+            this.size = 0
+        }
+
+        insert(i, node) {
+            this.data[++i] = node;
+            this.indexes[++this.size] = i;
+            this.reverse[i] = this.size;
+            this.shiftUp(this.size);
+
+        }
+
+        shiftUp(k) {
+            while (k > 1 && this.data[this.indexes[k]] > this.data[this.indexes[Math.floor(k / 2)]]) {
+                swap(this.data, this.indexes[k], this.indexes[Math.floor(k / 2)]);
+                this.reverse[this.indexes[Math.floor(k / 2)]] = Math.floor(k / 2);
+                this.reverse[this.indexes[k]] = k;
+                k = Math.floor(k / 2);
+            }
+            console.log(this.data)
+        }
+
+        shiftDown(k) {
+            swap(this.data, 1, this.data.length - 1);
+            let count = this.data.length;
+            while (2 * k < this.data.length) {
+                let j = 2 * k;
+                if (j + 1 <= count - 1 && this.data[this.indexes[j + 1]] > this.data[this.indexes[j]]) {
+                    j += 1;
+                }
+                if (this.data[this.indexes[k]] >= this.data[this.indexes[j]]) return;
+
+                swap(this.data, this.indexes[k], this.indexes[j]);
+
+                this.reverse[this.indexes[k]] = k;
+                this.reverse[this.indexes[j]] = j;
+
+                k = j;
+            }
+            console.log(this.data)
+        }
+
+        getItem(i) {
+            return this.data[i + 1]
+        }
+
+        change(i, newItem) {
+            this.data[++i] = newItem;
+            let j = this.reverse[i];
+            this.shiftUp(j);
+            this.shiftDown(j);
+        }
+    }
+</script>
+</body>
+</html>
