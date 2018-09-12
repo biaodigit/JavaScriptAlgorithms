@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class UnionFind {
+        constructor(n) {
+            this.id = new Array(n);
+            this.count = n;
+            for (let i = 0; i < n; i++) {
+                this.id[i] = i;
+            }
+        }
+
+        find(p) {
+            if(p < 0 || p >= this.count) return;
+            return this.id[p]
+        }
+
+        isConnected(p, q) {
+            return this.find(p) === this.find(q)
+        }
+
+        unionElements(p, q){
+            let pId = this.find(p),
+                qId = this.find(q);
+            if(pId === qId) return;
+            for(let i=0;i<this.count;i++){
+                if(this.id[i] === pId){
+                    this.id[i] = qId;
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
