@@ -13,9 +13,8 @@
         }
 
         initArr(arr) {
-            Array.prototype.push.apply(this.data, arr);
+            this.data = arr;
             this.data.splice(0, 0, '');
-            console.log(this.data)
         }
 
         insert(el) {
@@ -24,19 +23,24 @@
             this.shiftUp()
         }
 
+        parentK(num) {
+            return Math.floor(num / 2)
+        }
+
         shiftUp() {
             let count = this.data.length - 1;
-            while (count > 1 && this.data[count] > this.data[Math.floor(count / 2)]) {
-                swap(this.data, count, Math.floor(count / 2));
-                count = Math.floor(count / 2);
+            while (count > 1 && this.data[count] > this.data[this.parentK(count)]) {
+                swap(this.data, count, this.parentK(count));
+                count = this.parentK(count);
             }
             console.log(this.data)
         }
 
         shiftDown(k) {
             swap(this.data, 1, this.data.length - 1);
+            this.data.pop();
             let count = this.data.length;
-            while (2 * k < this.data.length) {
+            while (2 * k < count) {
                 let j = 2 * k;
                 if (j + 1 <= count - 1 && this.data[j + 1] > this.data[j]) {
                     j += 1;
