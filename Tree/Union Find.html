@@ -10,16 +10,16 @@
         constructor(n) {
             this.parent = new Array(n);
             this.count = n;
-            this.sz = n;
+            this.rank = new Array(n);
             for (let i = 0; i < n; i++) {
                 this.parent[i] = i;
-                this.sz[i] = 1;
+                this.rank[i] = 1;
             }
         }
 
         find(p) {
             if (p < 0 || p >= this.count) return;
-            while(p !== this.parent(p)){
+            while (p !== this.parent(p)) {
                 p = this.parent(p)
             }
             return p
@@ -33,12 +33,13 @@
             let pId = this.find(p),
                 qId = this.find(q);
             if (pId === qId) return;
-            if(this.sz[pId] < this.sz[qId]) {
+            if (this.rank[pId] < this.rank[qId]) {
                 this.parent[pId] = qId;
-                this.sz[qId] += this.sz[pId];
-            }else{
+            } else if (this.rank[qId] < this.rank[pId]) {
                 this.parent[qId] = pId;
-                this.sz[pId] += this.sz[qId];
+            } else {
+                this.parent[pId] = qId;
+                this.rank[qId]++;
             }
         }
     }
