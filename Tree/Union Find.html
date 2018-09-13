@@ -8,30 +8,37 @@
 <script>
     class UnionFind {
         constructor(n) {
-            this.id = new Array(n);
+            this.parent = new Array(n);
             this.count = n;
+            this.sz = n;
             for (let i = 0; i < n; i++) {
-                this.id[i] = i;
+                this.parent[i] = i;
+                this.sz[i] = 1;
             }
         }
 
         find(p) {
-            if(p < 0 || p >= this.count) return;
-            return this.id[p]
+            if (p < 0 || p >= this.count) return;
+            while(p !== this.parent(p)){
+                p = this.parent(p)
+            }
+            return p
         }
 
         isConnected(p, q) {
             return this.find(p) === this.find(q)
         }
 
-        unionElements(p, q){
+        unionElements(p, q) {
             let pId = this.find(p),
                 qId = this.find(q);
-            if(pId === qId) return;
-            for(let i=0;i<this.count;i++){
-                if(this.id[i] === pId){
-                    this.id[i] = qId;
-                }
+            if (pId === qId) return;
+            if(this.sz[pId] < this.sz[qId]) {
+                this.parent[pId] = qId;
+                this.sz[qId] += this.sz[pId];
+            }else{
+                this.parent[qId] = pId;
+                this.sz[pId] += this.sz[qId];
             }
         }
     }
