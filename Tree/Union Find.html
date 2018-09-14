@@ -19,10 +19,17 @@
 
         find(p) {
             if (p < 0 || p >= this.count) return;
-            while (p !== this.parent(p)) {
-                p = this.parent(p)
+            // path compression 1
+            // while (p !== this.parent[p]) {
+            //     this.parent[p] = this.parent[this.parent[p]]
+            //     p = this.parent(p)
+            // }
+            // return p
+            // path compression 2
+            if (p !== this.parent[p]) {
+                this.parent[p] = this.find(this.parent[p])
             }
-            return p
+            return this.parent[p];
         }
 
         isConnected(p, q) {
