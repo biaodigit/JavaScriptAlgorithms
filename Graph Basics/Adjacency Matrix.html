@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 稠密图 - 邻接矩阵
+    class DenseGraph {
+        constructor(n, directed) {
+            this.n = n;
+            this.m = 0;
+            this.g = [];
+            this.directed = directed
+            for (let i = 0; i < n; i++) {
+                this.g.push(new Array(n).fill(false))
+            }
+        }
+
+        v() {
+            return this.n;
+        }
+
+        e() {
+            return this.m;
+        }
+
+        addEdge(v, w) {
+           this.g[v][w] = true;
+           if(!this.directed){
+               this.g[w][v] = true;
+           }
+           this.m++;
+        }
+
+        hasEdge(v, w) {
+            return this.g[v][w];
+        }
+    }
+
+    new DenseGraph(5, false)
+</script>
+</body>
+</html>

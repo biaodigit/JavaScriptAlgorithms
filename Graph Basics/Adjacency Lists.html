@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 稀疏图 - 邻接表
+    class SparseGraph {
+        constructor(n, directed) {
+            this.n = n;
+            this.m = 0;
+            this.g = [];
+            this.directed = directed
+            for (let i = 0; i < n; i++) {
+                this.g.push(new Array(n))
+            }
+        }
+
+        v() {
+            return this.n;
+        }
+
+        e() {
+            return this.m;
+        }
+
+        addEdge(v, w) {
+            this.g[v].push(w);
+            if (v !== w && !this.directed) {
+                this.g[w].push(v);
+            }
+            this.m++;
+        }
+
+        hasEdge(v, w) {
+            for (let i = 0; i < this.g[v].length; i++) {
+                if(this.g[v][i] === w) return true;
+            }
+            return false
+        }
+    }
+</script>
+</body>
+</html>
