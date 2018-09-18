@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 无向图 - 连通分量
+    class GraphOrder {
+        constructor(arr) {
+            this.visited = new Array(arr.length).fill(false);
+            this.ccount = 0;
+            for (let i = 1; i < this.visited.length; i++) {
+                if (!this.visited[i]) {
+                    this.dfs(arr, i);
+                }
+            }
+        }
+
+        dfs(arr, v) {
+            this.visited[v] = true;
+            for (let i = 0; i < arr[v].length - 1; i++) {
+                if (!this.visited[arr[v][i]]) {
+                    this.dfs(arr, arr[v][i])
+                } else {
+
+                }
+            }
+
+        }
+
+
+        count() {
+            return this.ccount;
+        }
+
+    }
+</script>
+</body>
+</html>
