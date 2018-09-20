@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 无向图最短路径算法
+    class ShortestPath {
+        constructor(arr, s) {
+            this.visited = new Array(arr.length).fill(false);
+            this.from = new Array(arr.length).fill(-1);
+            this.ord = new Array(arr.length).fill(-1);
+            this.graph = arr;
+            this.queue = [];
+        }
+
+        recordPathLen(s) {
+            this.queue.push(s);
+            this.ord[s] = 0;
+            while (this.queue.length) {
+                let v = this.queue[0];
+                this.queue.pop();
+                for (let i = 0; i < this.graph[v].length; i++) {
+                    let temp = this.graph[v][i];
+                    if (!this.visited[temp]) {
+                        this.queue.push(temp);
+                        this.visited[temp] = true;
+                        this.from[temp] = v;
+                        this.ord[temp] = this.ord[v] + 1;
+                    }
+                }
+            }
+        }
+
+        length(w) {
+            return this.ord[w];
+        }
+    }
+</script>
+</body>
+</html>
