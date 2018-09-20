@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //  寻路算法
+    class FindPath {
+        constructor(arr) {
+            this.visited = new Array(arr.length).fill(false);
+            this.from = new Array(arr.length).fill(-1);
+            for (let i = 0; i < this.visited.length; i++) {
+                if (!this.visited[i]) {
+                    this.dfs(arr, i);
+                }
+            }
+        }
+
+        dfs(arr, v) {
+            this.visited[v] = true;
+            for (let i = 0; i < arr[v].length; i++) {
+                if (!this.visited[arr[v][i]]) {
+                    this.from[i] = v;
+                    this.dfs(arr, arr[v][i])
+                }
+            }
+        }
+
+        hasPath(w) {
+            return this.visited[w]
+        }
+
+        find(w, vec) {
+            let stack = [],
+                p = w;
+            while (p !== -1) {
+                stack.push(p);
+                p = this.from[p];
+            }
+
+            let temp;
+            while (stack.length) {
+                temp = stack.pop();
+                vec.push(temp);
+            }
+        }
+
+        showPath(w) {
+            let vector = [];
+            this.findPath(w, vector);
+            for (let i = 0; i < vector.length; i++) {
+                if (i === vector.length - 1) {
+                    console.log(vector[i])
+                }else{
+                    console.log(`${vector[i]} -> `)
+                }
+            }
+        }
+
+    }
+</script>
+</body>
+</html>
