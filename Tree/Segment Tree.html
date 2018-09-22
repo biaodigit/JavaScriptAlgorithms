@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 线段树
+    class SegmentTree {
+        constructor(arr) {
+            this.data = arr.slice(0);
+            this.tree = new Array(4 * arr.length);
+            let len = this.data.length;
+            this.buildSegmentTree(0, 0, len - 1);
+        }
+
+        //在treeIndex位置创建表示区间[l, r]的线段树
+        buildSegmentTree(treeIndex, l, r) {
+            if (l === r) {
+                this.tree[treeIndex] = this.data[l];
+                return;
+            }
+            let leftChildIndex = this.leftChild(treeIndex),
+                rightChildIndex = this.rightChild(treeIndex),
+                mid = l + ((r - l) >> 1);
+            this.buildSegmentTree(leftChildIndex, l, mid);
+            this.buildSegmentTree(rightChildIndex, mid + 1, r);
+
+            this.tree[treeIndex] = this.tree[leftChildIndex] + this.tree[rightChildIndex];
+        }
+
+        get(index) {
+            if (index < 0 || index >= this.data.length) return;
+            return this.data[index];
+        }
+
+        getSize() {
+            return this.data.length;
+        }
+
+        leftChild(index) {
+            return 2 * index + 1
+        }
+
+        rightChild(index) {
+            return 2 * index + 2
+        }
+    }
+
+    function main(arr) {
+        let segTree = new SegmentTree(arr);
+        console.log(segTree.tree)
+    }
+
+    main([-2, 0, 3, -5, 2, -1])
+</script>
+</body>
+</html>

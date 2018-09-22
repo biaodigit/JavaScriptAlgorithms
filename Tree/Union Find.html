@@ -6,6 +6,7 @@
 </head>
 <body>
 <script>
+    // 并查集
     class UnionFind {
         constructor(n) {
             this.parent = new Array(n);
@@ -21,8 +22,8 @@
             if (p < 0 || p >= this.count) return;
             // path compression 1
             // while (p !== this.parent[p]) {
-            //     this.parent[p] = this.parent[this.parent[p]]
-            //     p = this.parent(p)
+            //     this.parent[p] = this.parent[this.parent[p]];
+            //     p = this.parent(p);
             // }
             // return p
             // path compression 2

@@ -5,39 +5,39 @@
     <title>索引堆</title>
 </head>
 <body>
+<script src="../Sort/SortTestHelper.js"></script>
 <script>
+    // 索引堆
     class IndexMaxHEap {
         constructor(capatity) {
             this.data = new Array(capatity + 1);
             this.indexes = new Array(capatity + 1);
             this.reverse = new Array(capatity + 1).fill(0);
-            this.size = 0
+            this.count = 0
         }
 
         insert(i, node) {
             this.data[++i] = node;
-            this.indexes[++this.size] = i;
-            this.reverse[i] = this.size;
-            this.shiftUp(this.size);
+            this.indexes[++this.count] = i;
+            this.reverse[i] = this.count;
+            this.shiftUp(this.count);
 
         }
 
         shiftUp(k) {
-            while (k > 1 && this.data[this.indexes[k]] > this.data[this.indexes[Math.floor(k / 2)]]) {
-                swap(this.data, this.indexes[k], this.indexes[Math.floor(k / 2)]);
-                this.reverse[this.indexes[Math.floor(k / 2)]] = Math.floor(k / 2);
+            while (k > 1 && this.data[this.indexes[k]] > this.data[this.indexes[(k / 2) >> 1]]) {
+                swap(this.data, this.indexes[k], this.indexes[(k / 2) >> 1]);
+                this.reverse[this.indexes[(k / 2) >> 1]] = (k / 2) >> 1;
                 this.reverse[this.indexes[k]] = k;
-                k = Math.floor(k / 2);
+                k = (k / 2) >> 1;
             }
             console.log(this.data)
         }
 
         shiftDown(k) {
-            swap(this.data, 1, this.data.length - 1);
-            let count = this.data.length;
-            while (2 * k < this.data.length) {
+            while (2 * k <= this.count) {
                 let j = 2 * k;
-                if (j + 1 <= count - 1 && this.data[this.indexes[j + 1]] > this.data[this.indexes[j]]) {
+                if (j + 1 <= this.count - 1 && this.data[this.indexes[j + 1]] > this.data[this.indexes[j]]) {
                     j += 1;
                 }
                 if (this.data[this.indexes[k]] >= this.data[this.indexes[j]]) return;
@@ -54,6 +54,16 @@
 
         getItem(i) {
             return this.data[i + 1]
+        }
+
+        extractMaxIndex() {
+            let res = this.indexes[1];
+            swap(this.data, this.indexes[1], this.indexes[this.count]);
+            this.reverse[this.indexes[1]] = 1;
+            this.reverse[this.indexes[this.count]] = 0;
+            this.count--;
+            this.shiftDown(1);
+            return res
         }
 
         change(i, newItem) {
