@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prim</title>
+</head>
+<body>
+<script src="../Graph%20Basics/Edge.js"></script>
+<script>
+    const matrix = [
+        [null, null, 0.26, null, 0.38, null, 0.58, 0.16],  // 0
+        [null, null, 0.36, 0.29, null, 0.32, null, 0.19],  // 1
+        [0.26, 0.36, null, 0.17, null, null, 0.40, 0.34],  // 2
+        [null, 0.29, 0.17, null, null, null, 0.52, null],  // 3
+        [0.38, null, null, null, null, 0.35, 0.93, 0.37],  // 4
+        [null, 0.32, null, null, 0.35, null, null, 0.28],  // 5
+        [0.58, null, 0.40, 0.52, 0.93, null, null, null],  // 6
+        [0.16, 0.19, 0.34, null, 0.37, 0.28, null, null]   // 7
+    ];
+
+    class lazyPrimMinHeap {
+        constructor(matrix) {
+            this.rows = this.cols = matrix.length;
+            this.marked = [];
+            this.matrix = [];
+            this.pq = [];
+            this.mst = [];
+            for (let i = 0; i < this.rows; i++) {
+                this.marked[i] = false
+            }
+            for (let i = 0; i < matrix.length; i++) {
+                this.matrix[i] = [];
+                for (let j = 0; j < matrix[i].length; j++) {
+                    if (matrix[i][j]) {
+                        this.matrix[i].push(new Edge(i, j, matrix[i][j]))
+                    }
+                }
+            }
+            this.buildMST();
+            console.log(this.mst)
+        }
+
+        visit(v) {
+            if (this.marked[v]) return;
+            this.marked[v] = true;
+            let e;
+            for (let i = 0; i < this.matrix[v].length; i++) {
+                e = this.matrix[v][i];
+                if (!this.marked[e.other(v)]) {
+                    this.pq.push(e)
+                }
+            }
+        }
+
+        buildMST() {
+            this.visit(0);
+            while (this.pq.length) {
+                this.pq = this.pq.sort((a, b) => {
+                    return a.weight - b.weight
+                });
+                let minVet = this.pq.shift();
+                if (this.marked[minVet.v()] === this.marked[minVet.w()]) {
+                    continue;
+                }
+                this.mst.push(minVet);
+                if (!this.marked[minVet.v()]) {
+                    this.visit(minVet.v())
+                } else {
+                    this.visit(minVet.w())
+                }
+            }
+        }
+    }
+
+    new lazyPrimMinHeap(matrix)
+</script>
+</body>
+</html>
