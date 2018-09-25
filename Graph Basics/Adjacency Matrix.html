@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<script src="./Edge.js"></script>
 <script>
     // 稠密图 - 邻接矩阵
     class DenseGraph {
@@ -12,9 +13,10 @@
             this.n = n;
             this.m = 0;
             this.g = [];
-            this.directed = directed
+            this.index = 0;
+            this.directed = directed;
             for (let i = 0; i < n; i++) {
-                this.g.push(new Array(n).fill(false))
+                this.g.push(new Array(n).fill(null))
             }
         }
 
@@ -26,17 +28,52 @@
             return this.m;
         }
 
-        addEdge(v, w) {
-           this.g[v][w] = true;
-           if(!this.directed){
-               this.g[w][v] = true;
-           }
-           this.m++;
+        addEdge(v, w, weight) {
+            if (this.hasEdge(v, w)) {
+                this.g[v][w] = null;
+                if (!this.directed) {
+                    this.g[w][v] = null;
+                }
+                this.m--;
+            }
+            this.g[v][w] = new Edge(v, w, weight);
+            if (!this.directed) {
+                this.g[w][v] = new Edge(v, w, weight);
+            }
+            this.m++;
         }
 
         hasEdge(v, w) {
-            return this.g[v][w];
+            return this.g[v][w] !== null;
         }
+
+        begin() {
+            this.index = -1;
+            return this.next()
+        }
+
+        next(v) {
+            for (let i = this.index + 1; i < this.g[v].length; i++) {
+                if(this.g[v][i]){
+                    return this.g[v][i]
+                }
+            }
+            return null
+        }
+
+        show() {
+            for (let i = 0; i < this.v(); i++) {
+                for (let j = 0; j < this.v(); j++) {
+                    if (this.g[v][w]) {
+                        console.log(`g[i][j] -> ${this.g[i][j].wt()}`)
+                    } else {
+                        console.log(null)
+                    }
+                }
+            }
+        }
+
+
     }
 
     new DenseGraph(5, false)

@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<script src="./Edge.js"></script>
 <script>
     // 稀疏图 - 邻接表
     class SparseGraph {
@@ -12,7 +13,8 @@
             this.n = n;
             this.m = 0;
             this.g = [];
-            this.directed = directed
+            this.index = 0;
+            this.directed = directed;
             for (let i = 0; i < n; i++) {
                 this.g.push(new Array(n))
             }
@@ -26,19 +28,34 @@
             return this.m;
         }
 
-        addEdge(v, w) {
-            this.g[v].push(w);
+        addEdge(v, w, weight) {
+            this.g[v].push(new Edge(v, w, weight));
             if (v !== w && !this.directed) {
-                this.g[w].push(v);
+                this.g[w].push(new Edge(v, w, weight));
             }
             this.m++;
         }
 
         hasEdge(v, w) {
             for (let i = 0; i < this.g[v].length; i++) {
-                if(this.g[v][i] === w) return true;
+                if (this.g[v][i].other() === w) return true;
             }
             return false
+        }
+
+        begin(v) {
+            this.index = 0;
+            if (this.g[v].length) {
+                 return this.g[v][this.index]
+            }
+        }
+
+        next(v) {
+            this.index += 1;
+            if(this.index < this.g[v].length){
+                return this.g[v][this.index]
+            }
+            return null
         }
     }
 </script>
