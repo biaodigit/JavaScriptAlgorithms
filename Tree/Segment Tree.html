@@ -11,6 +11,7 @@
         constructor(arr) {
             this.data = arr.slice(0);
             this.tree = new Array(4 * arr.length);
+            this.lazy = [];
             let len = this.data.length;
             this.buildSegmentTree(0, 0, len - 1);
         }
@@ -62,9 +63,11 @@
 
         }
 
+        // todo 懒惰标记
+
         update(index, val) {
             if (index < 0 || index >= this.data.length) return;
-            this.data[index] = val
+            this.data[index] = val;
             this.set(0, 0, this.data.length - 1, index, val)
         }
 

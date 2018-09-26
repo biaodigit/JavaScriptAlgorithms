@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trie</title>
+</head>
+<body>
+<script>
+    class TrieNode {
+        constructor(key) {
+            this.key = key;
+            this.next = new Map();
+            this.isWord = false;
+        }
+    }
+
+    class Trie {
+        constructor() {
+            this.root = new TrieNode(null);
+            this.size = 0;
+        }
+
+        add(word) {
+            let cur = this.root,
+                c;
+            for (let i = 0; i < word.length; i++) {
+                c = word.charAt(i);
+                if(!cur.next.get(c)){
+                    cur.next.set(c, new TrieNode(c))
+                }
+                cur = cur.next.get(c);
+            }
+            if(!cur.isWord){
+                cur.isWord = true;
+                this.size++
+            }
+            console.log(this.root)
+        }
+
+        getSize() {
+            return this.size;
+        }
+    }
+
+    let trie = new Trie();
+    trie.add('apple')
+    trie.add('panda')
+</script>
+</body>
+</html>
