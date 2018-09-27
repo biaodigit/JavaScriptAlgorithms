@@ -16,13 +16,14 @@
                     this.dfs(arr, i);
                 }
             }
+            console.log(this.from)
         }
 
         dfs(arr, v) {
             this.visited[v] = true;
             for (let i = 0; i < arr[v].length; i++) {
                 if (!this.visited[arr[v][i]]) {
-                    this.from[i] = v;
+                    this.from[arr[v][i]] = v;
                     this.dfs(arr, arr[v][i])
                 }
             }
@@ -48,18 +49,32 @@
         }
 
         showPath(w) {
-            let vector = [];
-            this.findPath(w, vector);
+            let vector = [],
+                path = '';
+            this.find(w, vector);
+            console.log(vector)
             for (let i = 0; i < vector.length; i++) {
                 if (i === vector.length - 1) {
-                    console.log(vector[i])
-                }else{
-                    console.log(`${vector[i]} -> `)
+                    path += vector[i]
+                } else {
+                    path += `${vector[i]} -> `
                 }
             }
+            console.log(path)
         }
 
     }
+
+    let graph = [
+        [1, 2, 5, 6],
+        [0],
+        [0],
+        [4, 5],
+        [3, 5, 6],
+        [0, 3, 4],
+        [0, 4]
+    ]
+    new FindPath(graph).showPath(6)
 </script>
 </body>
 </html>
