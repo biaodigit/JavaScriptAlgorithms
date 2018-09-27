@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../Graph%20Basics/Edge.js"></script>
+<script>
+    class PrimMST {
+        constructor(matrix) {
+            this.rows = matrix.length;
+            this.matrix = [];
+            this.mst = [];
+            this.marked = [];
+            this.edgeTo = [];
+            this.ipq = new IndexMinHeap(matrix.length);
+            for (let i = 0; i < this.rows; i++) {
+                this.marked[i] = false;
+                this.edgeTo.push(null);
+            }
+
+            //初始化矩阵
+            this.initMatrix(matrix);
+            //构建最小生成树
+            this.buildMST();
+            console.log(this.mst)
+        }
+
+        initMatrix(matrix) {
+            for (let i = 0; i < matrix.length; i++) {
+                this.matrix[i] = [];
+                for (let j = 0; j < matrix[i].length; j++) {
+                    if (matrix[i][j]) {
+                        this.matrix[i].push(new Edge(i, j, matrix[i][j]))
+                    }
+                }
+            }
+        }
+
+        buildMST() {
+            this.visit(0);
+            // console.log(this.ipq)
+            while(!this.ipq.isEmpty()){
+                let v = this.ipq.extractMinIndex();
+                this.mst.push(this.edgeTo[v]);
+                this.visit(v)
+            }
+        }
+
+        visit(v) {
+            if (this.marked[v]) return;
+            this.marked[v] = true;
+            let e, w;
+            for (let i = 0; i < this.matrix[v].length; i++) {
+                e = this.matrix[v][i];
+                w = e.other(v);
+                if (!this.marked[w]) {
+                    if (!this.edgeTo[w]) {
+                        this.ipq.insert(w, e.wt());
+                        console.log(this.ipq)
+                        this.edgeTo[w] = e;
+                        // console.log(this.edgeTo)
+                    } else if (e.wt() < this.edgeTo[w].wt()) {
+                        this.edgeTo[w] = e;
+                        this.ipq.change(w, e.wt());
+                    }
+                }
+            }
+        }
+    }
+
+    //region 最小索引堆
+    class IndexMinHeap {
+        constructor(capatity) {
+            this.data = new Array(capatity + 1);
+            this.indexes = new Array(capatity + 1);
+            this.reverse = new Array(capatity + 1).fill(0);
+            this.count = 0;
+            this.capacity = capatity;
+        }
+
+        insert(i, item) {
+            if (this.count + 1 > this.capacity || this.contain(i)) return;
+
+            i++;
+            this.data[i] = item;
+            this.indexes[this.count + 1] = i;
+            this.reverse[i] = this.count + 1;
+            this.count++;
+            this.shiftUp(this.count)
+
+        }
+
+        shiftDown(k) {
+            if (k * 2 <= this.count) {
+                let j = k * 2;
+                if (j + 1 <= this.count && this.data[this.indexes[j]] > this.data[this.indexes[j + 1]]) {
+                    j += 1
+                }
+                if (this.data[k] <= this.data[j]) return;
+                this.swapIndex(k, j)
+            }
+        }
+
+        shiftUp(k) {
+            while (k > 1 && this.data[this.indexes[k]] < this.data[this.indexes[k >> 1]]) {
+                this.swapIndex(k, k >> 1);
+                k = k >> 1
+            }
+        }
+
+        contain(i) {
+            return this.reverse[i + 1] !== 0;
+        }
+
+        extractMin() {
+            if (!this.count) return;
+
+            let res = this.data[this.indexes[1]];
+            this.swapIndex(1, this.count);
+            this.reverse[this.indexes[this.count--]] = 0;
+            this.shiftDown(1);
+            return res
+
+        }
+
+        extractMinIndex() {
+            if (!this.count) return;
+
+            let res = this.indexes[1] - 1;
+            this.swapIndex(1, this.count);
+            this.reverse[this.indexes[this.count--]] = 0;
+            this.shiftDown(1);
+            return res
+        }
+
+        swapIndex(i, j) {
+            // let t = this.indexes[i];
+            // this.indexes[i] = this.indexes[j];
+            // this.indexes[j] = t;
+            [this.indexes[i], this.indexes[j]] = [this.indexes[j], this.indexes[i]];
+
+            this.reverse[this.indexes[i]] = i;
+            this.reverse[this.indexes[j]] = j;
+        }
+
+        isEmpty() {
+            return this.count === 0;
+        }
+
+        change(i, val) {
+            // console.log(i, val)
+            i++;
+            this.data[i] = val;
+
+            this.shiftUp(this.reverse[i]);
+            this.shiftDown(this.reverse[i]);
+        }
+    }
+
+    //endregion
+
+    const matrix = [
+        [null, null, 0.26, null, 0.38, null, 0.58, 0.16],  // 0
+        [null, null, 0.36, 0.29, null, 0.32, null, 0.19],  // 1
+        [0.26, 0.36, null, 0.17, null, null, 0.40, 0.34],  // 2
+        [null, 0.29, 0.17, null, null, null, 0.52, null],  // 3
+        [0.38, null, null, null, null, 0.35, 0.93, 0.37],  // 4
+        [null, 0.32, null, null, 0.35, null, null, 0.28],  // 5
+        [0.58, null, 0.40, 0.52, 0.93, null, null, null],  // 6
+        [0.16, 0.19, 0.34, null, 0.37, 0.28, null, null]   // 7
+    ];
+
+    new PrimMST(matrix)
+
+
+
+</script>
+</body>
+</html>

@@ -7,20 +7,10 @@
 <body>
 <script src="../Graph%20Basics/Edge.js"></script>
 <script>
-    const matrix = [
-        [null, null, 0.26, null, 0.38, null, 0.58, 0.16],  // 0
-        [null, null, 0.36, 0.29, null, 0.32, null, 0.19],  // 1
-        [0.26, 0.36, null, 0.17, null, null, 0.40, 0.34],  // 2
-        [null, 0.29, 0.17, null, null, null, 0.52, null],  // 3
-        [0.38, null, null, null, null, 0.35, 0.93, 0.37],  // 4
-        [null, 0.32, null, null, 0.35, null, null, 0.28],  // 5
-        [0.58, null, 0.40, 0.52, 0.93, null, null, null],  // 6
-        [0.16, 0.19, 0.34, null, 0.37, 0.28, null, null]   // 7
-    ];
-
-    class lazyPrimMinHeap {
+    // 最小生成树 - prim算法 - 切分定理
+    class lazyPrim {
         constructor(matrix) {
-            this.rows = this.cols = matrix.length;
+            this.rows = matrix.length;
             this.marked = [];
             this.matrix = [];
             this.pq = [];
@@ -28,6 +18,14 @@
             for (let i = 0; i < this.rows; i++) {
                 this.marked[i] = false
             }
+            //初始化矩阵
+            this.initMatrix(matrix);
+            //构建最小生成树
+            this.buildMST();
+            console.log(this.mst)
+        }
+
+        initMatrix(matrix) {
             for (let i = 0; i < matrix.length; i++) {
                 this.matrix[i] = [];
                 for (let j = 0; j < matrix[i].length; j++) {
@@ -36,8 +34,6 @@
                     }
                 }
             }
-            this.buildMST();
-            console.log(this.mst)
         }
 
         visit(v) {
@@ -72,7 +68,18 @@
         }
     }
 
-    new lazyPrimMinHeap(matrix)
+    const matrix = [
+        [null, null, 0.26, null, 0.38, null, 0.58, 0.16],  // 0
+        [null, null, 0.36, 0.29, null, 0.32, null, 0.19],  // 1
+        [0.26, 0.36, null, 0.17, null, null, 0.40, 0.34],  // 2
+        [null, 0.29, 0.17, null, null, null, 0.52, null],  // 3
+        [0.38, null, null, null, null, 0.35, 0.93, 0.37],  // 4
+        [null, 0.32, null, null, 0.35, null, null, 0.28],  // 5
+        [0.58, null, 0.40, 0.52, 0.93, null, null, null],  // 6
+        [0.16, 0.19, 0.34, null, 0.37, 0.28, null, null]   // 7
+    ];
+
+    new lazyPrim(matrix)
 </script>
 </body>
 </html>
