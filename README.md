@@ -8,6 +8,7 @@
 - [x] [LazyPrim(有权图最小生成树 - 普通递归构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/LazyPrim.html)
 - [x] [PrimMinIndexHeap(有权图最小成生成树 - 最小索引堆构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/PrimMinIndexHeap.html)
 - [x] [monotonyStack(单调栈)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/monotonyStack.html)
+- [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Binary%20Search.html)
 
 ##### 排序
 > 已完成
@@ -38,7 +39,7 @@
 
 ##### 树
 > 已完成
-- [x] [二分搜索树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Binary%20Search%20Tree.html)
+- [x] [二分搜索树(包含前中后序遍历(递归、非递归、morris解法)、广度遍历)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Binary%20Search%20Tree.html)
 - [x] [堆](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Heap.html)
 - [x] [索引堆](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/IndexHeap.html)
 - [x] [线段树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Segment%20Tree.html)
@@ -46,10 +47,6 @@
 
 > 施工中
 - [x] [字典树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
-
-##### 其他
-> 已完成
-- [x] [二分查找](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Binary%20Search.html)
 
 
 ##### 致谢
