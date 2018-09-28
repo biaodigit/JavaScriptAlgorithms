@@ -8,7 +8,7 @@
 <script>
     // 无向图最短路径算法
     class ShortestPath {
-        constructor(arr, s) {
+        constructor(arr) {
             this.visited = new Array(arr.length).fill(false);
             this.from = new Array(arr.length).fill(-1);
             this.ord = new Array(arr.length).fill(-1);
@@ -16,12 +16,12 @@
             this.queue = [];
         }
 
-        recordPathLen(s) {
+        pathStart(s) {
             this.queue.push(s);
             this.ord[s] = 0;
+            this.visited[s] = true;
             while (this.queue.length) {
-                let v = this.queue[0];
-                this.queue.pop();
+                let v = this.queue.shift();
                 for (let i = 0; i < this.graph[v].length; i++) {
                     let temp = this.graph[v][i];
                     if (!this.visited[temp]) {
@@ -32,12 +32,56 @@
                     }
                 }
             }
+            console.log(this.ord);
+            return this
+        }
+
+        find(w, vec) {
+            let stack = [],
+                p = w;
+            while (p !== -1) {
+                stack.push(p);
+                p = this.from[p];
+            }
+
+            let temp;
+            while (stack.length) {
+                temp = stack.pop();
+                vec.push(temp);
+            }
+        }
+
+        showPath(w) {
+            let vector = [],
+                path = '';
+            this.find(w, vector)
+            for (let i = 0; i < vector.length; i++) {
+                if (i === vector.length - 1) {
+                    path += vector[i]
+                } else {
+                    path += `${vector[i]} -> `
+                }
+            }
+            console.log(path)
         }
 
         length(w) {
             return this.ord[w];
         }
     }
+
+    let graph = [
+        [1, 2, 5, 6],
+        [0],
+        [0],
+        [4, 5],
+        [3, 5, 6],
+        [0, 3, 4],
+        [0, 4]
+    ];
+
+    new ShortestPath(graph).pathStart(0).showPath(3)
+
 </script>
 </body>
 </html>
