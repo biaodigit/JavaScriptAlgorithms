@@ -8,7 +8,8 @@
 - [x] [LazyPrim(有权图最小生成树 - 普通递归构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/LazyPrim.html)
 - [x] [PrimMinIndexHeap(有权图最小成生成树 - 最小索引堆构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/PrimMinIndexHeap.html)
 - [x] [monotonyStack(单调栈)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/monotonyStack.html)
-- [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Binary%20Search.html)
+- [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Binary%20Search.html)
+- [x] [8-Queens(八皇后问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/8-Queens.html)
 
 ##### 排序
 > 已完成
