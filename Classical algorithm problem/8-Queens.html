@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 八皇后问题 - 经典回溯算法
+    let EightQueens = function () {
+        const LEN = 8;
+        let res = [],
+            rows = [],
+            cols = new Array(LEN).fill(false),
+            dia1 = new Array(LEN * 2 - 1).fill(false),
+            dia2 = new Array(LEN * 2 - 1).fill(false);
+
+        let putQueen = function (index, row) {
+            if (index === LEN) {
+                res.push(generateBoard(row));
+                return
+            }
+
+            for (let i = 0; i < LEN; i++) {
+                if (!cols[i] && !dia1[i + index] && !dia2[index - i + LEN - 1]) {
+                    rows.push(i);
+                    cols[i] = true;
+                    dia1[i + index] = true;
+                    dia2[index - i + LEN - 1] = true;
+                    putQueen(index + 1, row);
+                    rows.pop();
+                    cols[i] = false;
+                    dia1[i + index] = false;
+                    dia2[index - i + LEN - 1] = false;
+                }
+            }
+        };
+
+        let generateBoard = function (row) {
+            let board = new Array(LEN).fill(""),
+                str;
+            for (let i = 0; i < LEN; i++) {
+                for(let j=0;j<LEN;j++) {
+                    board[i] += "."
+                }
+            }
+
+            for (let j = 0; j < LEN; j++) {
+                str = board[j].split("");
+                str.splice(row[j], 1, "Q");
+                board[j] = str.join("")
+            }
+            return board
+        };
+        putQueen(0, rows);
+        console.log(res)
+        return res
+    };
+    EightQueens()
+</script>
+</body>
+</html>
