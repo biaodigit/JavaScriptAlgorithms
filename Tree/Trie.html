@@ -25,16 +25,42 @@
                 c;
             for (let i = 0; i < word.length; i++) {
                 c = word.charAt(i);
-                if(!cur.next.get(c)){
+                if (!cur.next.get(c)) {
                     cur.next.set(c, new TrieNode(c))
                 }
                 cur = cur.next.get(c);
             }
-            if(!cur.isWord){
+            if (!cur.isWord) {
                 cur.isWord = true;
                 this.size++
             }
-            console.log(this.root)
+        }
+
+        contains(word) {
+            let cur = this.root,
+                c;
+            for (let i = 0; i < word.length; i++) {
+                c = word.charAt(i);
+                if (!cur.next.has(c)) {
+                    return false
+                }
+                cur = cur.next.get(c);
+            }
+            console.log(cur.isWord)
+            return cur.isWord
+        }
+
+        isPrefix(prefix) {
+            let cur = this.root,
+                c;
+            for (let i = 0; i < prefix.length; i++) {
+                c = prefix.charAt(i);
+                if(!cur.next.has(c)){
+                    return false
+                }
+                cur = cur.next.get(c);
+            }
+            return true
         }
 
         getSize() {
@@ -45,6 +71,9 @@
     let trie = new Trie();
     trie.add('apple')
     trie.add('panda')
+    // trie.add('pan')
+    trie.contains('pan')
+    console.log(trie.isPrefix('pa'))
 </script>
 </body>
 </html>
