@@ -23,6 +23,7 @@
 - [x] [三路快速排序](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Sort/ThreeWayQuickSort.html)
 - [x] [希尔排序](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Sort/Shell%20Sort.html)
 - [x] [堆排序](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Sort/Heap%20Sort.html)
+- [x] [基数排序](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Sort/Radix%20Sort.html)
 
 ##### 链表
 > 已完成
