@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function radixSort(arr) {
+        let bucket = [],
+            len = arr.length,
+            max = arr[0],
+            loop, str, i, j, k, t;
+        for (let num of arr) {
+            if (num > max) {
+                max = num
+            }
+        }
+        loop = String(max).length;
+        for (i = 0; i < 10; i++) {
+            bucket[i] = [];
+        }
+
+        for (i = 0; i < loop; i++) {
+            for (j = 0; j < len; j++) {
+                str = String(arr[j]);
+                if (str.length >= i + 1) {
+                    k = parseInt(str[str.length - i - 1])
+                    bucket[k].push(arr[j])
+                } else {
+                    bucket[0].push(arr[j])
+                }
+            }
+
+            arr.splice(0, len);
+            for (j = 0; j < 10; j++) {
+                t = bucket[j].length;
+                for (k = 0; k < t; k++) {
+                    arr.push(bucket[j][k])
+                }
+                bucket[j] = []
+            }
+        }
+        console.log(arr)
+    }
+
+    radixSort([36, 9, 0, 25, 1, 49, 64, 16, 81, 4])
+</script>
+</body>
+</html>
