@@ -10,6 +10,7 @@
 - [x] [monotonyStack(单调栈)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/monotonyStack.html)
 - [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Binary%20Search.html)
 - [x] [8-Queens(八皇后问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/8-Queens.html)
+- [x] [kruskal(有权图最小生成树 - 并查集构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/kruskal.html)
 
 ##### 排序
 > 已完成
