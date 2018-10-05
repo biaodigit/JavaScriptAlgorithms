@@ -15,9 +15,11 @@
         console.log(`排序后数组：[${arr}]`);
     }
 
+    // 个人见解：相对单路快排的优化版，以arr[0]作为对比元素，避免极端情况(队列头为极大或极小元素)造成的时间复杂度退化，
+    // 每组排序后寻找中位数，把所有中位数集合再次寻找中位数，此时这个二次寻找后的中位数相对整个数组来说接近于排序后数组的中位数
     function BFPRT(arr, l, r, k) {
-        let pivot_index = getPivotIndex(arr, l, r),
-            boundary_index = partition(arr, l, r, pivot_index),
+        let central_index = getCentralIndex(arr, l, r),
+            boundary_index = partition(arr, l, r, central_index),
             num = boundary_index - l + 1;
         if (num === k) {
             return boundary_index
@@ -37,24 +39,28 @@
             }
             arr[j] = el
         }
-        return (r + l) >> 1
+
+        return l + ((r - l) >> 1)
     }
 
-    function getPivotIndex(arr, l, r) {
-        if (r - l < 5) {
-            return insertSort(arr, l, r);
+    function getCentralIndex(arr, l, r) {
+        if (r - l < 4) {
+            return insertSort(arr, l, r)
         }
+
         let sub_right = l - 1,
             index;
+
         for (let i = l; i + 4 <= r; i += 5) {
             index = insertSort(arr, i, i + 4);
             swap(arr, ++sub_right, index);
         }
+
         return BFPRT(arr, l, sub_right, (sub_right - l >> 1) + 1)
     }
 
-    function partition(arr, l, r, pivot_index) {
-        swap(arr, l, pivot_index);
+    function partition(arr, l, r, central_index) {
+        swap(arr, l, central_index);
         let j = l,
             el = arr[l];
         for (let i = l + 1; i <= r; i++) {
@@ -66,7 +72,7 @@
         return j
     }
 
-    main([32, 153, 100, -50, -10, 6, 5, 1356, 20, 160, 2, 1432, 4, 50, 14, 102, -30, 3, 45, 1312, 1, -1, -3], 4)
+    main([32, 153, 100, -50, -10, 6, 5, 1356, 20, 160, 2, 1432, 4, 50, 14, 102, -30, 3, 45, 1312, 1, -1, -3], 7)
 
 
 </script>
