@@ -47,8 +47,6 @@
 - [x] [索引堆](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/IndexHeap.html)
 - [x] [线段树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Segment%20Tree.html)
 - [x] [并查集](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
-
-> 施工中
 - [x] [字典树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
 
 
