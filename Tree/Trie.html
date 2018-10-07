@@ -7,8 +7,7 @@
 <body>
 <script>
     class TrieNode {
-        constructor(key) {
-            this.key = key;
+        constructor() {
             this.next = new Map();
             this.isWord = false;
         }
@@ -36,18 +35,24 @@
             }
         }
 
-        contains(word) {
-            let cur = this.root,
-                c;
-            for (let i = 0; i < word.length; i++) {
-                c = word.charAt(i);
-                if (!cur.next.has(c)) {
-                    return false
+        search(word) {
+            let cur = this.root;
+            return this.match(cur, word, 0)
+        }
+
+        match(node, word, index) {
+            if (index === word.length) return node.isWord;
+
+            let c = word.charAt(index);
+            if (c === '.') {
+                for (let key of node.next.keys()) {
+                    if (this.match(node.next.get(key), word, index + 1)) return true
                 }
-                cur = cur.next.get(c);
+                return false
+            } else {
+                if (!node.next.has(c)) return false;
+                return this.match(node.next.get(c), word, index + 1)
             }
-            console.log(cur.isWord)
-            return cur.isWord
         }
 
         isPrefix(prefix) {
@@ -55,7 +60,7 @@
                 c;
             for (let i = 0; i < prefix.length; i++) {
                 c = prefix.charAt(i);
-                if(!cur.next.has(c)){
+                if (!cur.next.has(c)) {
                     return false
                 }
                 cur = cur.next.get(c);
@@ -72,8 +77,8 @@
     trie.add('apple')
     trie.add('panda')
     // trie.add('pan')
-    trie.contains('pan')
     console.log(trie.isPrefix('pa'))
+    console.log(trie.search('p...a'))
 </script>
 </body>
 </html>
