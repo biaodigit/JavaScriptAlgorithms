@@ -68,6 +68,46 @@
             return true
         }
 
+        remove(word) {
+            if (!word.length) return;
+            let cur = this.root;
+
+            this.removeMatch(cur, word, 0)
+        }
+
+        removeMatch(node, word, index) {
+            if(this.search(word)) {
+                if (index === word.length) return false;
+
+                let c = word.charAt(index);
+                if (!node.next.has(c)) return;
+
+                let cur = node.next.get(c),
+                    del;
+                del = this.removeMatch(cur, word, index + 1);
+                if (this.isEnd(cur) && index === word.length - 1) {
+                    node.next.delete(c);
+                    return false
+                } else if (cur.isWord && !del && index === word.length - 1) {
+                    cur.isWord = false;
+                    return true
+                } else if (!del && !this.hasKey(cur)) {
+                    node.next.delete(c)
+                }
+                return true
+            }else{
+                console.log('word is undefined')
+            }
+        }
+
+        isEnd(node) {
+            return node.next.size === 0
+        }
+
+        hasKey(node) {
+            return node.next.size >= 1
+        }
+
         getSize() {
             return this.size;
         }
@@ -76,9 +116,17 @@
     let trie = new Trie();
     trie.add('apple')
     trie.add('panda')
-    // trie.add('pan')
-    console.log(trie.isPrefix('pa'))
-    console.log(trie.search('p...a'))
+    trie.add('pandc')
+    trie.add('pan')
+    trie.add('pad')
+    trie.add('pa')
+    trie.add('dog')
+    // console.log(trie.isPrefix('pa'))
+    // console.log(trie.search('p...a'))
+    // trie.remove('apple')
+    // trie.remove('pan')
+    trie.remove('panda')
+    console.log(trie.root.next)
 </script>
 </body>
 </html>
