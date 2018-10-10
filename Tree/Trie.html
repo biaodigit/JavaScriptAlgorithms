@@ -69,35 +69,106 @@
         }
 
         remove(word) {
-            if (!word.length) return;
-            let cur = this.root;
+            if (!word.length) return false;
+            //region 非递归
+            let cur = this.root,
+                stack = [],
+                c;
 
-            this.removeMatch(cur, word, 0)
+            stack.push(cur);
+            for (let i = 0; i < word.length; i++) {
+                c = word.charAt(i);
+                cur = cur.next.get(c);
+                stack.push(cur)
+            }
+
+            if (!stack[stack.length - 1].isWord) return false;
+
+            stack[stack.length - 1].isWord = false;
+            this.size--;
+
+            if (this.hasKey(stack[stack.length - 1])) {
+                return true
+            } else {
+                stack.pop()
+            }
+
+            for (let i = word.length - 1; i >= 0; i--) {
+                c = word.charAt(i);
+                stack[stack.length - 1].next.delete(c);
+                if (stack[stack.length - 1].isWord || this.hasKey(stack[stack.length - 1])) return true;
+                stack.pop()
+            }
+            //endregion
+
+            //region 递归
+            // return this.removeMatch(cur, word, 0)
+            //endregion
         }
 
         removeMatch(node, word, index) {
-            if(this.search(word)) {
-                if (index === word.length) return false;
+            //region code1
+            // if(this.search(word)) {
+            //     if (index === word.length) return false;
+            //
+            //     let c = word.charAt(index);
+            //     if (!node.next.has(c)) return;
+            //
+            //     let cur = node.next.get(c),
+            //         del;
+            //     del = this.removeMatch(cur, word, index + 1);
+            //     if (this.isEnd(cur) && index === word.length - 1) {
+            //         node.next.delete(c);
+            //         return false
+            //     } else if (cur.isWord && !del && index === word.length - 1) {
+            //         cur.isWord = false;
+            //         return true
+            //     } else if (!del && !cur.isWord && !this.hasKey(cur)) {
+            //         node.next.delete(c);
+            //     }
+            //     return true
+            // }else{
+            //     console.log('word is undefined')
+            // }
+            //endregion
 
-                let c = word.charAt(index);
-                if (!node.next.has(c)) return;
+            //region code2
+            // if (index === word.length) {
+            //     node.isWord = false;
+            //     this.size--;
+            //     return true
+            // }
+            //
+            // let c = word.charAt(index),
+            //     cur = node.next.get(c),
+            //     ret;
+            // ret = this.removeMatch(cur, word,index+1);
+            // if(!cur.isWord && this.isEnd(cur)){
+            //     node.next.delete(c)
+            // }
+            // return ret
+            //endregion
 
-                let cur = node.next.get(c),
-                    del;
-                del = this.removeMatch(cur, word, index + 1);
-                if (this.isEnd(cur) && index === word.length - 1) {
-                    node.next.delete(c);
-                    return false
-                } else if (cur.isWord && !del && index === word.length - 1) {
-                    cur.isWord = false;
-                    return true
-                } else if (!del && !cur.isWord && !this.hasKey(cur)) {
-                    node.next.delete(c);
-                }
-                return true
-            }else{
-                console.log('word is undefined')
+            //region code3
+            if (index === word.length) return;
+
+            let c = word.charAt(index),
+                cur = node.next.get(c);
+
+            this.removeMatch(cur, word, index + 1);
+
+            if (index === word.length - 1) {
+                cur.isWord = false;
+                this.size--;
             }
+
+            if (!cur.isWord && this.isEnd(cur)) {
+                node.next.delete(c)
+            }
+
+            return true
+            //endregion
+
         }
 
         isEnd(node) {
@@ -125,8 +196,10 @@
     // console.log(trie.search('p...a'))
     // trie.remove('apple')
     // trie.remove('pan')
-    trie.remove('panda')
-    trie.remove('pandc')
+    console.log(trie.remove('panda'))
+    console.log(trie.remove('pandc'))
+    // console.log(trie.remove('pan'))
+    console.log(trie.remove('pa'))
     console.log(trie.root.next)
 </script>
 </body>
