@@ -5,12 +5,10 @@
 - [x] [BFPRT(无序数组寻找第N大(小)元素)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/BFPRT.html)
 - [x] [KMP(字符串快速匹配)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/KMP.html)
 - [x] [knapsack01(背包01问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/knapsack01.html)
-- [x] [LazyPrim(有权图最小生成树 - 普通递归构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/LazyPrim.html)
-- [x] [PrimMinIndexHeap(有权图最小成生成树 - 最小索引堆构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/PrimMinIndexHeap.html)
 - [x] [monotonyStack(单调栈)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/monotonyStack.html)
 - [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Binary%20Search.html)
 - [x] [8-Queens(八皇后问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/8-Queens.html)
-- [x] [kruskal(有权图最小生成树 - 并查集构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/kruskal.html)
+- [x] [Dijkstra(迪杰特斯拉算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Dijkstra.html)
 
 ##### 排序
 > 已完成
@@ -49,6 +47,11 @@
 - [x] [并查集](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
 - [x] [字典树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
 
+##### 最小生成树
+> 已完成
+- [x] [LazyPrim(有权图最小生成树 - 普通递归构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Minimum%20Span%20Tree/LazyPrim.html)
+- [x] [PrimMinIndexHeap(有权图最小成生成树 - 最小索引堆构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Minimum%20Span%20Tree/PrimMinIndexHeap.html)
+- [x] [kruskal(有权图最小生成树 - 并查集构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Minimum%20Span%20Tree/kruskal.html)
 
 ##### 致谢
 > 衷心感谢[波波老师](https://github.com/liuyubobobo)的优秀教学
