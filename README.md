@@ -8,7 +8,7 @@
 - [x] [monotonyStack(单调栈)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/monotonyStack.html)
 - [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Binary%20Search.html)
 - [x] [8-Queens(八皇后问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/8-Queens.html)
-- [x] [Dijkstra(迪杰特斯拉算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Dijkstra.html)
+- [x] [Dijkstra(迪杰斯特拉算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Dijkstra.html)
 
 ##### 排序
 > 已完成
