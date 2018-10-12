@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单源最短路径 - 迪杰特斯拉算法</title>
+</head>
+<body>
+<script src="../Graph%20Basics/Edge.js"></script>
+<script>
+    class Dijkstra {
+        constructor(graph, s) {
+            this.s = s;
+            this.disTo = Array(graph.length).fill(0);
+            this.marked = Array(graph.length).fill(false);
+            this.from = Array(graph.length).fill(null);
+            this.ipq = new IndexMinHeap(graph.length);
+            this.graph = [];
+            this.initGraph(graph);
+            this.dijkstra(s);
+            console.log(this.from)
+
+        }
+
+        initGraph(graph) {
+            for (let i = 0; i < graph.length; i++) {
+                this.graph[i] = [];
+                for (let j = 0; j < graph[i].length; j++) {
+                    let e = graph[i][j];
+                    if (e) {
+                        this.graph[i].push(new Edge(i, j, e))
+                    }
+                }
+            }
+        }
+
+        dijkstra(s) {
+            this.disTo[s] = 0;
+            this.marked[s] = true;
+            this.ipq.insert(s, this.disTo[s]);
+
+            while (!this.ipq.isEmpty()) {
+                let v = this.ipq.extractMinIndex(),
+                    e, w;
+
+                console.log(v)
+
+                this.marked[v] = true;
+                // Relaxation
+                for (let i = 0; i < this.graph[v].length; i++) {
+                    e = this.graph[v][i];
+                    w = e.other(v);
+                    if (!this.marked[w]) {
+                        if (!this.from[w] || this.disTo[v] + e.wt() < this.disTo[w]) {
+                            this.disTo[w] = this.disTo[v] + e.wt();
+                            this.from[w] = e;
+                            if (this.ipq.contain(w)) {
+                                this.ipq.change(w, this.disTo[w])
+                            } else {
+                                this.ipq.insert(w, this.disTo[w])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        shortestPathTo(w) {
+            return this.disTo[w]
+        }
+
+        hasPathTo(w) {
+            return this.marked[w]
+        }
+
+        shortestPath(w, vec) {
+            let stack = [],
+                e = this.from[w];
+            while (e.v() !== this.s) {
+                stack.push(e);
+                e = this.from[e.v()]
+            }
+            stack.push(e);
+            while (stack.length) {
+                e = stack.pop();
+                vec.push(e.v())
+            }
+            vec.push(w)
+        }
+
+        showPath(w) {
+            let vector = [],
+                path = '';
+            this.shortestPath(w, vector);
+            for (let i = 0; i < vector.length; i++) {
+                if (i === vector.length - 1) {
+                    path += vector[i]
+                } else {
+                    path += `${vector[i]} -> `
+                }
+            }
+            console.log(`shortestPath ${this.s} to ${w}: ${this.shortestPathTo(w)}`)
+            console.log(path)
+        }
+    }
+
+    //region 最小索引堆
+    class IndexMinHeap {
+        constructor(capacity) {
+            this.data = Array(capacity + 1);
+            this.indexes = Array(capacity + 1);
+            this.reverse = Array(capacity + 1).fill(0);
+            this.count = 0;
+            this.capacity = capacity;
+        }
+
+        insert(i, val) {
+            if (this.count + 1 > this.capacity || this.contain(i)) return;
+
+            this.data[++i] = val;
+            this.indexes[++this.count] = i;
+            this.reverse[i] = this.count;
+            this.shiftUp(this.count);
+
+        }
+
+        shiftUp(k) {
+            while (k > 1 && this.data[this.indexes[k]] < this.data[this.indexes[k >> 1]]) {
+                this.swapIndex(k, k >> 1);
+                k = k >> 1;
+            }
+        }
+
+        shiftDown(k) {
+            while (k * 2 <= this.count) {
+                let j = k * 2;
+                if (j + 1 <= this.count && this.data[this.indexes[j + 1]] < this.data[this.indexes[j]]) {
+                    j++
+                }
+                if (this.data[this.indexes[k]] < this.data[this.indexes[j]]) return;
+
+                this.swapIndex(k, j)
+                k = j
+            }
+        }
+
+        contain(i) {
+            return this.reverse[i + 1] !== 0;
+        }
+
+        extractMin() {
+            if (!this.count) return;
+
+            let res = this.data[this.indexes[1]];
+            this.swapIndex(1, this.count);
+            this.reverse[this.indexes[this.count]] = 0;
+            this.count--;
+            this.shiftDown(1);
+            return res
+
+        }
+
+        extractMinIndex() {
+            if (!this.count) return;
+
+            let res = this.indexes[1] - 1;
+            this.swapIndex(1, this.count);
+            this.reverse[this.indexes[this.count]] = 0;
+            this.count--;
+            this.shiftDown(1);
+            return res
+        }
+
+        isEmpty() {
+            return this.count === 0
+        }
+
+        swapIndex(i, j) {
+            [this.indexes[i], this.indexes[j]] = [this.indexes[j], this.indexes[i]]
+
+            this.reverse[this.indexes[i]] = i;
+            this.reverse[this.indexes[j]] = j;
+        }
+
+        change(i, val) {
+            i++;
+            this.data[i] = val;
+
+            this.shiftUp(this.reverse[i])
+            this.shiftDown(this.reverse[i])
+        }
+    }
+
+    //endregion
+
+    const graph = [
+        [0, 5, 2, 6, 0],
+        [0, 0, 0, 0, 1],
+        [0, 1, 0, 3, 5],
+        [0, 0, 0, 0, 2],
+        [0, 0, 0, 0, 0]
+    ]
+
+    new Dijkstra(graph, 0).showPath(3)
+</script>
+</body>
+</html>

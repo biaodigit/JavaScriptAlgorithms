@@ -14,7 +14,7 @@
             this.mst = [];
             this.initMatrix(matrix);
             this.uf = new UnionFind(matrix.length);
-            console.log(this.uf)
+
             for (let i = 0; i < this.matrix.length; i++) {
                 for (let j = 0; j < this.matrix[i].length; j++) {
                     let e = this.matrix[i][j];
@@ -27,6 +27,7 @@
                 return a.wt() - b.wt()
             });
             this.buildMST()
+            console.log(this.mst)
         }
 
         initMatrix(matrix) {
@@ -41,14 +42,12 @@
         }
 
         buildMST() {
-            console.log(this.pq)
             while (this.pq.length) {
                 let e = this.pq.shift();
                 if (this.uf.isConnected(e.v(), e.w())) continue;
                 this.mst.push(e);
                 this.uf.unionElements(e.v(), e.w())
             }
-            console.log(this.mst)
         }
     }
 
@@ -76,16 +75,16 @@
         }
 
         unionElements(p, q) {
-            let pId = this.find(p),
-                qId = this.find(q);
-            if (pId === qId) return;
-            if (this.rank[pId] > this.rank[qId]) {
-                this.parent[pId] = qId;
-            } else if (this.rank[pId] < this.rank[qId]) {
-                this.parent[qId] = pId;
+            let pRoot = this.find(p),
+                qRoot = this.find(q);
+            if (pRoot === qRoot) return;
+            if (this.rank[pRoot] < this.rank[qRoot]) {
+                this.parent[pRoot] = qRoot;
+            } else if (this.rank[pRoot] > this.rank[qRoot]) {
+                this.parent[qRoot] = pRoot;
             } else {
-                this.parent[pId] = qId;
-                this.rank[qId]++;
+                this.parent[pRoot] = qRoot;
+                this.rank[qRoot]++;
             }
         }
     }
