@@ -9,6 +9,7 @@
 - [x] [Binary Search(二分查找)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Binary%20Search.html)
 - [x] [8-Queens(八皇后问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/8-Queens.html)
 - [x] [Dijkstra(迪杰斯特拉算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Dijkstra.html)
+- [x] [Boyer-Moore(坏字符串匹配算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Boyer-Moore.html)
 
 ##### 排序
 > 已完成
