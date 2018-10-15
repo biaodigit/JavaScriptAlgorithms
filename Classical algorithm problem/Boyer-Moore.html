@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BM算法(坏字符匹配)</title>
+</head>
+<body>
+<script>
+    const MAX_CHAR_SIZE = 256;
+
+    function BoyerMoore(text, pattern,) {
+        let tLen = text.length,
+            pLen = pattern.length,
+            lastArr = Array(MAX_CHAR_SIZE),
+            matchArr = Array(pLen),
+            suffixArr = Array(pLen);
+
+        let match = function () {
+            computeLast();
+            computeMatch();
+
+            let i = pLen - 1,
+                j = pLen - 1,
+                lastIndex;
+            while (i < tLen) {
+                if (pattern.charAt(j) === text.charAt(i)) {
+                    if (j === 0) {
+                        console.log(i)
+                        return i;
+                    }
+                    j--;
+                    i--;
+                } else {
+                    lastIndex = lastArr[text.charAt(i)] ? lastArr[text.charAt(i)] : -1;
+                    i += pLen - 1 - j + Math.max(j - lastIndex, matchArr[j]);
+                    j = pLen - 1
+                }
+
+            }
+            return -1
+        };
+
+        let computeLast = function () {
+            for (let j = pLen - 1; j >= 0; j--) {
+                lastArr[pattern.charAt(j)] = j
+            }
+        };
+
+        let computeMatch = function () {
+            for (let j = 0; j < matchArr.length; j++) {
+                matchArr[j] = matchArr.length;
+            }
+
+            computeSuffix();
+
+            for (let i = 0; i < matchArr.length - 1; i++) {
+                let j = suffixArr[i + 1] - 1;
+                if (suffixArr[i] > j) {
+                    matchArr[j] = j - i
+                } else {
+                    matchArr[j] = Math.min(j - i + matchArr[i], matchArr[j])
+                }
+            }
+
+            if (suffixArr[0] < pattern.length) {
+                for (let j = suffixArr[0] - 1; j >= 0; j--) {
+                    if (suffixArr[0] < matchArr[j]) {
+                        matchArr[j] = suffixArr[0]
+                    }
+                }
+
+                let j = suffixArr[0];
+                for (let k = suffixArr[j]; k < pattern.length; k = suffixArr[k]) {
+                    while (j < k) {
+                        if (matchArr[j] > k) {
+                            matchArr[j] = k
+                        }
+                        j++
+                    }
+                }
+            }
+        };
+
+        let computeSuffix = function () {
+            suffixArr[suffixArr.length - 1] = suffixArr.length;
+            let j = suffixArr.length - 1;
+
+            for (let i = suffixArr.length - 2; i >= 0; i--) {
+                while (j < suffixArr.length - 1 && pattern.charAt(j) !== pattern.charAt(i)) {
+                    j = suffixArr[j + 1] - 1
+                }
+                if (pattern.charAt(j) === pattern.charAt(i)) {
+                    j--
+                }
+                suffixArr[i] = j + 1;
+            }
+        };
+        match()
+    }
+
+
+    BoyerMoore("HERE IS A SIMPLE LEAMPLE", "LEAMPLE")
+</script>
+</body>
+</html>

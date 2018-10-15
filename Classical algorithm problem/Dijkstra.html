@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>单源最短路径 - 迪杰特斯拉算法</title>
+    <title>单源最短路径 - 迪杰斯特拉算法</title>
 </head>
 <body>
 <script src="../Graph%20Basics/Edge.js"></script>
@@ -41,8 +41,6 @@
             while (!this.ipq.isEmpty()) {
                 let v = this.ipq.extractMinIndex(),
                     e, w;
-
-                console.log(v)
 
                 this.marked[v] = true;
                 // Relaxation
