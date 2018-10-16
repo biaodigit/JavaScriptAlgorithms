@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AVL(平衡树)</title>
+</head>
+<body>
+<script>
+    class Node {
+        constructor(key, value) {
+            this.key = key;
+            this.value = value;
+            this.left = null;
+            this.right = null;
+            this.height = 1;
+        }
+    }
+
+    class AVLTree {
+        constructor(key, value) {
+            this.root = new Node(key, value);
+            this.size = 0;
+        }
+
+        add(key, value) {
+            this.root = this._add(this.root, key, value)
+        }
+
+        _add(node, key, value) {
+            if (node === null) {
+                this.size++;
+                return new Node(key, value)
+            }
+
+            if (value < node.value) {
+                node.left = this._add(node.left, key, value)
+            } else if (value > node.value) {
+                node.right = this._add(node.right, key, value)
+            } else {
+                node.key = key;
+                node.value = value
+            }
+            node.height = 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
+
+            //计算平衡因子
+            let balanceFactor = this.getBalanceFactor(node);
+            if (Math.abs(balanceFactor) > 1) {
+                console.log(`unbalance: ${Math.abs(balanceFactor)}`)
+            }
+
+            return node
+        }
+
+        //获取节点平衡因子
+        getBalanceFactor(node) {
+            if (node === null) return 0;
+
+            return this.getHeight(node.left) - this.getHeight(node.right)
+        }
+
+        getHeight(node) {
+            if (node === null) return 0;
+
+            return node.height;
+        }
+
+        getSize() {
+            return this.size
+        }
+
+
+    }
+</script>
+</body>
+</html>
