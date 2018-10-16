@@ -48,6 +48,9 @@
 - [x] [并查集](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
 - [x] [字典树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
 
+> 编写中
+- [ ] [AVL树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/AVL%20Tree.html)
+
 ##### 最小生成树
 > 已完成
 - [x] [LazyPrim(有权图最小生成树 - 普通递归构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Minimum%20Span%20Tree/LazyPrim.html)
