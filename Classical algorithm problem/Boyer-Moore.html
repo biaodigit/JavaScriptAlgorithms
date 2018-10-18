@@ -29,7 +29,7 @@
                     j--
                 } else {
                     lastIndex = badSuffix[text.charAt(i)] >= 0 ? badSuffix[text.charAt(i)] : -1;
-                    i += pLen - 1 - j + Math.max(j - lastIndex, goodSuffix[j]);
+                    i += pLen - 1 - j + Math.max(j - lastIndex, goodSuffix[j])
                     j = pLen - 1;
                 }
             }
@@ -38,7 +38,7 @@
 
 
         let computeBadSuffix = function () {
-            for (let j = pLen - 1; j >= 0; j--) {
+            for (let j = 0; j < pLen - 1; j++) {
                 badSuffix[pattern.charAt(j)] = j
             }
         };
@@ -84,7 +84,8 @@
         match()
     }
 
-    BoyerMoore("here is a simple example", "example")
+    BoyerMoore("here is a simple slexample", "slexample")
+    // BoyerMoore("abbadcababacab", "babac")
 </script>
 </body>
 </html>
