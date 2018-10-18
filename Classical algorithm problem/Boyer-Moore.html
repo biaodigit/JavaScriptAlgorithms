@@ -9,13 +9,12 @@
     function BoyerMoore(text, pattern) {
         let tLen = text.length,
             pLen = pattern.length,
-            lastArr = [],
-            matchArr = Array(pLen),
+            badSuffix = {},
+            goodSuffix = Array(pLen),
             suffixArr = Array(pLen);
-
         let match = function () {
-            computeLast();
-            computeMatch();
+            computeBadSuffix();
+            computeGoodSuffix();
 
             let i = pLen - 1,
                 j = pLen - 1,
@@ -24,76 +23,68 @@
                 if (pattern.charAt(j) === text.charAt(i)) {
                     if (j === 0) {
                         console.log(i)
-                        return i;
+                        return
                     }
-                    j--;
                     i--;
-                } else {
-                    lastIndex = lastArr[text.charAt(i)] >= 0 ? lastArr[text.charAt(i)] : -1;
-                    i += pLen - 1 - j + Math.max(j - lastIndex, matchArr[j]);
-                    j = pLen - 1
-                }
-
-            }
-            return -1
-        };
-
-        let computeLast = function () {
-            for (let j = pLen - 1; j >= 0; j--) {
-                lastArr[pattern.charAt(j)] = j
-            }
-        };
-
-        let computeMatch = function () {
-            for (let j = 0; j < matchArr.length; j++) {
-                matchArr[j] = matchArr.length;
-            }
-
-            computeSuffix();
-
-            for (let i = 0; i < matchArr.length - 1; i++) {
-                let j = suffixArr[i + 1] - 1;
-                if (suffixArr[i] > j) {
-                    matchArr[j] = j - i
-                } else {
-                    matchArr[j] = Math.min(j - i + matchArr[i], matchArr[j])
-                }
-            }
-
-
-            let k = 0;
-            while (k < pLen - 1) {
-                if (suffixArr[k] < pattern.length) {
-                    for (let j = suffixArr[k] - 1; j >= 0; j--) {
-                        if (suffixArr[k] < matchArr[j]) {
-                            matchArr[j] = suffixArr[k]
-                        }
-                    }
-                    break;
-                } else {
-                    k++
-                }
-            }
-        };
-
-        let computeSuffix = function () {
-            suffixArr[suffixArr.length - 1] = suffixArr.length;
-            let j = suffixArr.length - 1;
-
-            for (let i = suffixArr.length - 2; i >= 0; i--) {
-                while (j < suffixArr.length - 1 && pattern.charAt(j) !== pattern.charAt(i)) {
-                    j = suffixArr[j + 1] - 1
-                }
-                if (pattern.charAt(j) === pattern.charAt(i)) {
                     j--
+                } else {
+                    lastIndex = badSuffix[text.charAt(i)] >= 0 ? badSuffix[text.charAt(i)] : -1;
+                    i += pLen - 1 - j + Math.max(j - lastIndex, goodSuffix[j]);
+                    j = pLen - 1;
                 }
-                suffixArr[i] = j + 1;
+            }
+
+        };
+
+
+        let computeBadSuffix = function () {
+            for (let j = pLen - 1; j >= 0; j--) {
+                badSuffix[pattern.charAt(j)] = j
+            }
+        };
+
+        let computeGoodSuffix = function () {
+            computeSuffixLength();
+
+            //case 3 模式串中没有字串对应好后缀
+            for (let i = 0; i < pLen; i++) {
+                goodSuffix[i] = pLen;
+            }
+
+            //case2 模式串开头存在部分好后缀
+            let j = 0;
+            for (let i = 0; i < pLen; i++) {
+                if (suffixArr[i] === i + 1) {
+                    while (j <= pLen - 1 - i - 1) {
+                        if (goodSuffix[j] === pLen) {
+                            goodSuffix[j] = pLen - 1 - i;
+                        }
+                        j++
+                    }
+                }
+            }
+
+            //case1 模式串中有子串与好后缀完全匹配
+            for (let i = 0; i < pattern.length - 1; i++) {
+                goodSuffix[pLen - 1 - suffixArr[i]] = pLen - 1 - i
+            }
+        };
+
+        let computeSuffixLength = function () {
+            suffixArr[suffixArr.length - 1] = suffixArr.length;
+            let q;
+            for (let i = suffixArr.length - 2; i >= 0; i--) {
+                q = i;
+                while (q >= 0 && pattern.charAt(q) === pattern.charAt(pLen - 1 - i + q)) {
+                    q--
+                }
+                suffixArr[i] = i - q
             }
         };
         match()
     }
 
-    BoyerMoore("here is a rxleple example", "example")
+    BoyerMoore("here is a simple example", "example")
 </script>
 </body>
 </html>
