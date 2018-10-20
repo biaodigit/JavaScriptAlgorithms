@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../Graph%20Basics/Edge.js"></script>
+<script>
+    class BellmanFord {
+        constructor(graph, s) {
+            this.s = s;
+            this.disTo = Array(graph.length).fill(0);
+            this.from = Array(graph.length).fill(null);
+            this.graph = [];
+            this.hasNegativeCycle = false;
+            this.initGraph(graph);
+            this.bellmanFord(s);
+            console.log(this.from)
+        }
+
+        initGraph(graph) {
+            for (let i = 0; i < graph.length; i++) {
+                this.graph[i] = [];
+                for (let j = 0; j < graph[i].length; j++) {
+                    let e = graph[i][j];
+                    if (e !== 0) {
+                        this.graph[i].push(new Edge(i, j, e))
+                    }
+                }
+            }
+        }
+
+        bellmanFord(s) {
+            this.disTo[s] = 0;
+            let e;
+
+            for (let i = 0; i < this.graph.length; i++) {
+                for (let j = 0; j < this.graph[i].length; j++) {
+                    e = this.graph[i][j];
+                    if (!this.from[e.w()] || this.disTo[e.v()] + e.wt() < this.disTo[e.w()]) {
+                        this.disTo[e.w()] = this.disTo[e.v()] + e.wt();
+                        this.from[e.w()] = e
+                    }
+                }
+            }
+
+            this.hasNegativeCycle = this.detectNegativeCycle();
+        }
+
+        detectNegativeCycle() {
+            let e;
+            for (let i = 0; i < this.graph.length; i++) {
+                for (let j = 0; j < this.graph[i].length; j++) {
+                    e = this.graph[i][j];
+                    if (!this.from[e.w()] || this.disTo[e.v()] + e.wt() < this.disTo[e.w()]) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+
+        shortestPathTo(w) {
+            if (w < 0 || w >= this.graph.length || !this.negativeCycle() || !this.hasPathTo(w)) return;
+
+            return this.disTo[w]
+        }
+
+        hasPathTo(w) {
+            if (w < 0 || w >= this.graph.length) return;
+            return this.from[w] !== null
+        }
+
+        negativeCycle() {
+            return this.hasNegativeCycle
+        }
+
+        shortestPath(w, vec) {
+            let stack = [],
+                e = this.from[w];
+            while (e.v() !== this.s) {
+                stack.push(e);
+                e = this.from[e.v()]
+            }
+            stack.push(e);
+            while (stack.length) {
+                e = stack.pop();
+                vec.push(e.v())
+            }
+            vec.push(w)
+        }
+
+        showPath(w) {
+            if (this.hasNegativeCycle) {
+                console.log('拥有负权环');
+                return
+            }
+            if(!this.hasPathTo(w)) return;
+            let vector = [],
+                path = '';
+            this.shortestPath(w, vector);
+            for (let i = 0; i < vector.length; i++) {
+                if (i === vector.length - 1) {
+                    path += vector[i]
+                } else {
+                    path += `${vector[i]} -> `
+                }
+            }
+            console.log(`shortestPath ${this.s} to ${w}: ${this.shortestPathTo(w)}`)
+            console.log(path)
+        }
+    }
+
+    //没有负权环
+    const graph1 = [
+        [0, 5, 2, 6, 0],
+        [0, 0, -4, 0, 2],
+        [0, 0, 0, 3, 5],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, -3, 0]
+    ];
+    // 有负权环
+    const graph2 = [
+        [0, 5, 2, 6, 0],
+        [0, 0, -4, 0, 2],
+        [0, 1, 0, 3, 5],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, -3, 0]
+    ];
+    new BellmanFord(graph1, 3)
+    // new BellmanFord(graph2, 0)
+</script>
+</body>
+</html>
