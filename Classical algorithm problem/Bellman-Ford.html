@@ -62,7 +62,7 @@
         }
 
         shortestPathTo(w) {
-            if (w < 0 || w >= this.graph.length || !this.negativeCycle() || !this.hasPathTo(w)) return;
+            if (w < 0 || w >= this.graph.length || this.negativeCycle() || !this.hasPathTo(w)) return;
 
             return this.disTo[w]
         }
@@ -79,7 +79,7 @@
         shortestPath(w, vec) {
             let stack = [],
                 e = this.from[w];
-            while (e.v() !== this.s) {
+            while (e.v() && e.v() !== this.s) {
                 stack.push(e);
                 e = this.from[e.v()]
             }
@@ -100,6 +100,7 @@
             let vector = [],
                 path = '';
             this.shortestPath(w, vector);
+
             for (let i = 0; i < vector.length; i++) {
                 if (i === vector.length - 1) {
                     path += vector[i]
@@ -107,7 +108,7 @@
                     path += `${vector[i]} -> `
                 }
             }
-            console.log(`shortestPath ${this.s} to ${w}: ${this.shortestPathTo(w)}`)
+            console.log(`shortestPath to ${w}: ${this.shortestPathTo(w)}`)
             console.log(path)
         }
     }
@@ -128,7 +129,7 @@
         [0, 0, 0, 0, 0],
         [0, 0, 0, -3, 0]
     ];
-    new BellmanFord(graph1, 0).showPath(3)
+    new BellmanFord(graph1, 3).showPath(3)
     new BellmanFord(graph2, 0).showPath(3)
 </script>
 </body>
