@@ -7,6 +7,7 @@
 <body>
 <script src="../Graph%20Basics/Edge.js"></script>
 <script>
+    //简易版BellmanFord
     class BellmanFord {
         constructor(graph, s) {
             this.s = s;
@@ -16,7 +17,6 @@
             this.hasNegativeCycle = false;
             this.initGraph(graph);
             this.bellmanFord(s);
-            console.log(this.from)
         }
 
         initGraph(graph) {
@@ -128,8 +128,8 @@
         [0, 0, 0, 0, 0],
         [0, 0, 0, -3, 0]
     ];
-    new BellmanFord(graph1, 3)
-    // new BellmanFord(graph2, 0)
+    new BellmanFord(graph1, 0).showPath(3)
+    new BellmanFord(graph2, 0).showPath(3)
 </script>
 </body>
 </html>
