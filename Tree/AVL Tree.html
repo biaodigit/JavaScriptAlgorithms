@@ -17,8 +17,8 @@
     }
 
     class AVLTree {
-        constructor(key, value) {
-            this.root = new Node(key, value);
+        constructor() {
+            this.root = null;
             this.size = 0;
         }
 
@@ -51,6 +51,29 @@
             return node
         }
 
+        isBST() {
+            let keys = [];
+            this.inOrder(this.root, keys);
+            for (let i = 1; i < keys.length; i++) {
+                if (keys[i - 1] > keys[i]) return false
+            }
+            return true
+        }
+
+        isBalanced() {
+            return this._isBalanced(this.root)
+        }
+
+        _isBalanced(node) {
+            if (!node) return true;
+
+            let balanceFactor = this.getBalanceFactor(node);
+            if (Math.abs(balanceFactor) > 1) {
+                return false
+            }
+            return this._isBalanced(node.left) && this._isBalanced(node.right)
+        }
+
         //获取节点平衡因子
         getBalanceFactor(node) {
             if (node === null) return 0;
@@ -68,7 +91,29 @@
             return this.size
         }
 
+        inOrder(node, keys) {
+            if (!node) return null;
 
+            let pre;
+            while (node) {
+                if (!node.left) {
+                    keys.push(node.key);
+                    node = node.right
+                } else {
+                    pre = node.left;
+                    while (pre.right && pre.right !== node) {
+                        pre = pre.right
+                    }
+                    if (!pre.right) {
+                        pre.right = node;
+                        node = node.left
+                    } else {
+                        keys.push(node)
+                        node = node.right
+                    }
+                }
+            }
+        }
     }
 </script>
 </body>
