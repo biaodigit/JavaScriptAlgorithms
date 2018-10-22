@@ -44,11 +44,56 @@
 
             //计算平衡因子
             let balanceFactor = this.getBalanceFactor(node);
-            if (Math.abs(balanceFactor) > 1) {
-                console.log(`unbalance: ${Math.abs(balanceFactor)}`)
+
+            //平衡维护
+            if (balanceFactor > 1 && this.getBalanceFactor(node.left) >= 0) {
+                return this.rightRotate(node)
+            } else if (balanceFactor < -1 && this.getBalanceFactor(node.right) <= 0) {
+                return this.leftRotate(node)
             }
 
             return node
+        }
+
+        // 对节点y进行向右旋转操作，返回旋转后新的根节点x
+        //        y                              x
+        //       / \                           /   \
+        //      x   T4     向右旋转 (y)        z     y
+        //     / \       - - - - - - - ->    / \   / \
+        //    z   T3                       T1  T2 T3 T4
+        //   / \
+        // T1   T2
+        rightRotate(y) {
+            let x = y.left,
+                T3 = x.right;
+            x.right = y;
+            y.left = T3;
+
+            y.height = 1 + Math.max(this.getHeight(y.left), this.getHeight(y.right));
+            x.height = 1 + Math.max(this.getHeight(x.left), this.getHeight(x.right));
+
+            return x
+        }
+
+        // 对节点y进行向左旋转操作，返回旋转后新的根节点x
+        //    y                             x
+        //  /  \                          /   \
+        // T1   x      向左旋转 (y)       y     z
+        //     / \   - - - - - - - ->   / \   / \
+        //   T2  z                     T1 T2 T3 T4
+        //      / \
+        //     T3 T4
+        leftRotate(y) {
+            let x = y.right,
+                T2 = x.left;
+
+            x.left = y;
+            y.right = T2;
+
+            y.height = 1 + Math.max(this.getHeight(y.left), this.getHeight(y.right));
+            x.height = 1 + Math.max(this.getHeight(x.left), this.getHeight(x.right));
+
+            return x
         }
 
         isBST() {
@@ -58,20 +103,6 @@
                 if (keys[i - 1] > keys[i]) return false
             }
             return true
-        }
-
-        isBalanced() {
-            return this._isBalanced(this.root)
-        }
-
-        _isBalanced(node) {
-            if (!node) return true;
-
-            let balanceFactor = this.getBalanceFactor(node);
-            if (Math.abs(balanceFactor) > 1) {
-                return false
-            }
-            return this._isBalanced(node.left) && this._isBalanced(node.right)
         }
 
         //获取节点平衡因子
@@ -89,6 +120,20 @@
 
         getSize() {
             return this.size
+        }
+
+        isBalanced() {
+            return this._isBalanced(this.root)
+        }
+
+        _isBalanced(node) {
+            if (!node) return true;
+
+            let balanceFactor = this.getBalanceFactor(node);
+            if (Math.abs(balanceFactor) > 1) {
+                return false
+            }
+            return this._isBalanced(node.left) && this._isBalanced(node.right)
         }
 
         inOrder(node, keys) {
