@@ -46,9 +46,43 @@
             let balanceFactor = this.getBalanceFactor(node);
 
             //平衡维护
+            //LL
             if (balanceFactor > 1 && this.getBalanceFactor(node.left) >= 0) {
                 return this.rightRotate(node)
-            } else if (balanceFactor < -1 && this.getBalanceFactor(node.right) <= 0) {
+            }
+
+            //RR
+            if (balanceFactor < -1 && this.getBalanceFactor(node.right) <= 0) {
+                return this.leftRotate(node)
+            }
+
+            //LR
+            //region 图示
+            //        y                            y                           z
+            //       / \                          / \                        /   \
+            //      x   T4     向左旋转 (x)       z  T4     向右旋转（y）      x    y
+            //     / \       - - - - - - - ->   / \     - - - - - - - ->   / \  / \
+            //   T1  z                         x  T3                      T1 T2 T3 T4
+            //      / \                       / \
+            //     T2 T3                     T1 T2
+            //endregion
+            if (balanceFactor > 1 && this.getBalanceFactor(node.left) < 0) {
+                node.left = this.leftRotate(node.left);
+                return this.rightRotate(node)
+            }
+
+            //RL
+            //region 图示
+            //        y                           y                           z
+            //       / \                         / \                        /   \
+            //     T1  x     向右旋转 (x)       T1   z        向右旋转（y）   y    x
+            //        / \   - - - - - - - ->       / \   - - - - - - - -> / \  / \
+            //       z  T4                        T2  x                  T1 T2 T3 T4
+            //      / \                              / \
+            //     T2 T3                            T3 T4
+            //endregion
+            if (balanceFactor < -1 && this.getBalanceFactor(node.right) > 0) {
+                node.right = this.rightRotate(node.right);
                 return this.leftRotate(node)
             }
 
@@ -66,6 +100,7 @@
         rightRotate(y) {
             let x = y.left,
                 T3 = x.right;
+
             x.right = y;
             y.left = T3;
 
@@ -160,6 +195,23 @@
             }
         }
     }
+
+    let avl = new AVLTree();
+    avl.add(12, 12);
+    avl.add(8, 8);
+    avl.add(18, 18);
+    avl.add(5, 5);
+    avl.add(11, 11);
+    // // avl.add(7,7);     //添加7后需进行右旋转
+    //RL
+    // avl.add(14,14);
+    // avl.add(8,8);
+    // avl.add(18,18);
+    // avl.add(5,5);
+    // avl.add(11,11);
+    // avl.add(17,17);
+    // avl.add(10,10);
+    console.log(avl)
 </script>
 </body>
 </html>
