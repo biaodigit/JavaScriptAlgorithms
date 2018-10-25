@@ -10,7 +10,7 @@
 - [x] [8-Queens(八皇后问题)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/8-Queens.html)
 - [x] [Dijkstra(迪杰斯特拉算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Dijkstra.html)
 - [x] [Boyer-Moore(坏字符串匹配算法)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Boyer-Moore.html)
-- [x] [Bellman-Ford](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Bellman-Ford.html)
+- [x] [Bellman-Ford(负权边最短路径)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Bellman-Ford.html)
 - [x] [Top K(前K大(小)的数)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Classical%20algorithm%20problem/Top%20K.html)
 
 ##### 排序
@@ -47,11 +47,9 @@
 - [x] [堆](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Heap.html)
 - [x] [索引堆](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/IndexHeap.html)
 - [x] [线段树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Segment%20Tree.html)
-- [x] [并查集](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
+- [x] [并查集](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Union%20Find.html)
 - [x] [字典树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
-
-> 编写中
-- [ ] [AVL树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/AVL%20Tree.html)
+- [x] [AVL树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/AVL%20Tree.html)
 
 ##### 最小生成树
 > 已完成

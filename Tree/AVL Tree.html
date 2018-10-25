@@ -131,6 +131,77 @@
             return x
         }
 
+        remove(key) {
+            let node = this.getNode(this.root, key);
+            if (node) {
+                this.root = this._remove(this.root, key);
+                return node.value
+            }
+            return null
+        }
+
+        _remove(node, key) {
+            if (!node) return null;
+
+            let retNode;
+            if (key < node.key) {
+                node.left = this._remove(node.left, key)
+                retNode = node
+            } else if (key > node.key) {
+                node.right = this._remove(node.right, key)
+                retNode = node
+            } else {
+                if (node.left === null) {
+                    let rightNode = node.right;
+                    node.right = null;
+                    this.size--;
+                    retNode = rightNode
+                } else if (node.right === null) {
+                    let leftNode = node.left;
+                    node.left = null;
+                    this.size--;
+                    retNode = leftNode;
+                } else {
+                    let successor = this.minNum(node);
+                    successor.right = this._remove(node.right, successor.key);
+                    successor.left = node.left;
+                    retNode = successor
+                }
+            }
+
+            if(retNode === null) return null;
+
+            retNode.height = 1 + Math.max(this.getHeight(retNode.left), this.getHeight(retNode.right));
+
+            //计算平衡因子
+            let balanceFactor = this.getBalanceFactor(retNode);
+
+            //平衡维护
+            //LL
+            if (balanceFactor > 1 && this.getBalanceFactor(retNode.left) >= 0) {
+                return this.rightRotate(retNode)
+            }
+
+            //RR
+            if (balanceFactor < -1 && this.getBalanceFactor(retNode.right) <= 0) {
+                return this.leftRotate(retNode)
+            }
+
+            //LR
+            if (balanceFactor > 1 && this.getBalanceFactor(retNode.left) < 0) {
+                retNode.left = this.leftRotate(retNode.left);
+                return this.rightRotate(retNode)
+            }
+
+            //RL
+            if (balanceFactor < -1 && this.getBalanceFactor(retNode.right) > 0) {
+                retNode.right = this.rightRotate(retNode.right);
+                return this.leftRotate(retNode)
+            }
+
+            return retNode
+        }
+
         isBST() {
             let keys = [];
             this.inOrder(this.root, keys);
@@ -153,6 +224,20 @@
             return node.height;
         }
 
+        getNode(node, key) {
+            if (!node) return null;
+
+            if (key === node.key) {
+                return node
+            }
+
+            if (node.key < key) {
+                return this.getNode(node.right, key)
+            } else {
+                return this.getNode(node.left, key)
+            }
+        }
+
         getSize() {
             return this.size
         }
@@ -169,6 +254,17 @@
                 return false
             }
             return this._isBalanced(node.left) && this._isBalanced(node.right)
+        }
+
+        minNum(node) {
+            if (!node) return null;
+
+            while (node) {
+                if (!node.left) {
+                    return node
+                }
+                node = node.left
+            }
         }
 
         inOrder(node, keys) {
