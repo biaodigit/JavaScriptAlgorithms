@@ -169,7 +169,7 @@
                 }
             }
 
-            if(retNode === null) return null;
+            if (retNode === null) return null;
 
             retNode.height = 1 + Math.max(this.getHeight(retNode.left), this.getHeight(retNode.right));
 
@@ -209,6 +209,18 @@
                 if (keys[i - 1] > keys[i]) return false
             }
             return true
+        }
+
+        contains(key) {
+            return this.getNode(this.root, key) !== null
+        }
+
+        set(key, val) {
+            let node = this.getNode(this.root, key);
+            if (!node) {
+                throw new Error(`${key} doesn't exist!`)
+            }
+            node.value = val
         }
 
         //获取节点平衡因子
