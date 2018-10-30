@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const RED = true;
+    const BLACK = false;
+
+    class Node {
+        constructor(key, val) {
+            this.key = key;
+            this.val = val;
+            this.left = null;
+            this.right = null;
+            this.color = RED;
+        }
+    }
+
+    class RedBlackTree {
+        constructor() {
+            this.root = null;
+            this.size = 0;
+        }
+
+        getSize() {
+            return this.size
+        }
+
+        isEmpty() {
+            return this.size === 0
+        }
+
+        isRed(node){
+            if(!node) return BLACK;
+
+            return node.color
+        }
+    }
+</script>
+</body>
+</html>
