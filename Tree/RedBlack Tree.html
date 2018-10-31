@@ -62,6 +62,29 @@
             return x
         }
 
+        //     node                   x
+        //    /   \     右旋转       /  \
+        //   x    T2   ------->   y   node
+        //  / \                       /  \
+        // y  T1                     T1  T2
+        rightRotate(node) {
+            let x = node.left,
+                T1 = x.right;
+            x.right = node;
+            node.left = T1;
+
+            x.color = node.color;
+            node.color = RED;
+
+            return x
+        }
+
+        flipColors(node) {
+            node.color = RED;
+            node.left.color = BLACK;
+            node.right.color = BLACK
+        }
+
         getSize() {
             return this.size
         }
