@@ -41,6 +41,19 @@
                 node.value = value
             }
 
+            if (this.isRed(node.right) && !this.isRed(node.left)) {
+                node = this.leftRotate(node)
+            }
+
+            if(this.isRed(node.left) && this.isRed(node.left.left)){
+                node = this.rightRotate(node)
+            }
+
+            if(this.isRed(node.left) && this.isRed(node.right)){
+                this.flipColors(node)
+            }
+
+
             return node
         }
 
