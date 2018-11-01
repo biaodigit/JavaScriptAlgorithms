@@ -6,22 +6,27 @@
 </head>
 <body>
 <script>
-    function LinkerList() {
-        let Node = function (element) {
-            this.element = element
+    class Node {
+        constructor(key) {
+            this.key = key;
             this.next = null
         }
-        //初始化链表长度
-        let length = 0;
-        //初始化第一个元素
-        let head = null;
-        this.append = function (element) {
+    }
+
+    // 链表
+    class LinkedList {
+        constructor() {
+            this.head = null;
+            this.length = 0;
+        }
+
+        add(key) {
             //初始化添加的Node实例
             let node = new Node(element),
                 current;
-            if (head === null) {
+            if (this.head === null) {
                 //第一个Node实例进入链表，之后在这个LinkedList实例中head就不再是null了
-                head = node;
+                this.head = node;
             } else {
                 current = head;
                 //循环链表知道找到最后一项，循环结束current指向链表最后一项元素
@@ -32,85 +37,77 @@
                 current.next = node;
             }
             //更新链表长度
-            length++;
-        };
-        //删除
-        this.remove = function (position) {
-            if (position >= 0 && position <= length) {
-                var current = head,
-                    previous,
-                    index = 0;
+            this.length++;
+        }
 
-                if (position === 0) {
-                    head = current.next
-                } else {
-                    //循环迭代到目标位置
-                    while (index++ < position) {
-                        previous = current
-                        current = current.next
-                    }
-                    //跳过current，将当前要移除的元素的上一个与下一项直接连接起来。
-                    previous.next = current.next
-                }
-                //更新链表长度
-                length--
-                return current.element
+        remove(position) {
+            if (position < 0 && position >= this.length) return;
+            let current = this.head,
+                previous,
+                index = 0;
+
+            if (position === 0) {
+                this.head = current.next
             } else {
-                return null
-            }
-        };
-        //插入
-        this.insert = function (position, element) {
-            if (position >= 0 && position <= length) {
-                let node = new Node(element),
-                    current = head,
-                    previous,
-                    index = 0;
-
-                if (position === 0) {
-                    node.next = current
-                    head = node
-                } else {
-                    //循环迭代到目标位置
-                    while (index++ < position) {
-                        previous = current
-                        current = current.next
-                    }
-                    node.next = current
-                    previous.next = node
+                //循环迭代到目标位置
+                while (index++ < position) {
+                    previous = current;
+                    current = current.next
                 }
-                length++
-                return true
-            } else {
-                return null
+                //跳过current，将当前要移除的元素的上一个与下一项直接连接起来。
+                previous.next = current.next
             }
-        };
-        //获取位置
-        this.indexOf = function (element) {
-            let current = head,
-                index = 0
+            //更新链表长度
+            this.length--
+        }
 
-            while(current){
-                if(current.element === element){
+        insert(position, element) {
+            if (position < 0 && position >= this.length) return;
+            let node = new Node(element),
+                current = this.head,
+                previous,
+                index = 0;
+
+            if (position === 0) {
+                node.next = current;
+                this.head = node
+            } else {
+                //循环迭代到目标位置
+                while (index++ < position) {
+                    previous = current;
+                    current = current.next
+                }
+                node.next = current;
+                previous.next = node
+            }
+            this.length++;
+            return true
+        }
+
+        indexOf(key) {
+            let current = this.head,
+                index = 0;
+
+            while (current) {
+                if (current.key === key) {
                     return index
                 }
-                index++
+                index++;
                 current = current.next
             }
-
             return -1
-        };
-        //判断是否为空
-        this.isEmpty = function () {
-            return length === 0
-        };
-        //返回长度
-        this.getLength = function () {
-            return length
         }
-        //返回头部
-        this.getHead = function () {
-            return head
+
+        isEmpty() {
+            return this.length === 0
+        }
+
+        getLength() {
+            return this.length
+        }
+
+        getHead() {
+            return this.head
         }
     }
 
