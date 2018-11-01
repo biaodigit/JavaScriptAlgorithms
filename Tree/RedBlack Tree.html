@@ -31,7 +31,10 @@
         }
 
         _add(node, key, value) {
-            if (!node) return new Node(key, value);
+            if (!node) {
+                this.size++;
+                return new Node(key, value);
+            }
 
             if (key < node.key) {
                 node.left = this._add(node.left, key, value)
@@ -45,14 +48,13 @@
                 node = this.leftRotate(node)
             }
 
-            if(this.isRed(node.left) && this.isRed(node.left.left)){
+            if (this.isRed(node.left) && this.isRed(node.left.left)) {
                 node = this.rightRotate(node)
             }
 
-            if(this.isRed(node.left) && this.isRed(node.right)){
+            if (this.isRed(node.left) && this.isRed(node.right)) {
                 this.flipColors(node)
             }
-
 
             return node
         }
@@ -112,6 +114,14 @@
             return node.color
         }
     }
+
+    let RBTree = new RedBlackTree();
+    RBTree.add(26, 26)
+    RBTree.add(17, 17)
+    RBTree.add(41, 41)
+    RBTree.add(30, 30)
+    // RBTree.add(47, 47)
+    console.log(RBTree)
 </script>
 </body>
 </html>

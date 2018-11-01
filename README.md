@@ -50,9 +50,7 @@
 - [x] [并查集](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Union%20Find.html)
 - [x] [字典树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/Trie.html)
 - [x] [AVL树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/AVL%20Tree.html)
-
-> 未完成
-- [ ] [红黑树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/RedBlack%20Tree.html)
+- [x] [红黑树](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Tree/RedBlack%20Tree.html)
 
 ##### 最小生成树
 > 已完成
