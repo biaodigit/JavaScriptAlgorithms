@@ -66,7 +66,7 @@
         //    T2 T3            T1   T2
         leftRotate(node) {
             let x = node.right,
-                T2 = x.right;
+                T2 = x.left;
 
             x.left = node;
             node.right = T2;
@@ -120,7 +120,7 @@
     RBTree.add(17, 17)
     RBTree.add(41, 41)
     RBTree.add(30, 30)
-    // RBTree.add(47, 47)
+    RBTree.add(47, 47)
     console.log(RBTree)
 </script>
 </body>
