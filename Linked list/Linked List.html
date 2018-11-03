@@ -7,107 +7,134 @@
 <body>
 <script>
     class Node {
-        constructor(key) {
-            this.key = key;
-            this.next = null
+        constructor(e, next) {
+            this.e = e;
+            this.next = next
         }
     }
 
     // 链表
     class LinkedList {
         constructor() {
-            this.head = null;
-            this.length = 0;
+            this.dummyHead = new Node();
+            this.size = 0;
         }
 
-        add(key) {
-            //初始化添加的Node实例
-            let node = new Node(element),
-                current;
-            if (this.head === null) {
-                //第一个Node实例进入链表，之后在这个LinkedList实例中head就不再是null了
-                this.head = node;
-            } else {
-                current = head;
-                //循环链表知道找到最后一项，循环结束current指向链表最后一项元素
-                while (current.next) {
-                    current = current.next;
-                }
-                //找到最后一项元素后，将他的next属性指向新元素node,建立链接
-                current.next = node;
+        add(index, e) {
+            if (index < 0 || index > this.size) {
+                throw new Error("Add failed. Illegal index")
             }
-            //更新链表长度
-            this.length++;
-        }
 
-        remove(position) {
-            if (position < 0 && position >= this.length) return;
-            let current = this.head,
-                previous,
-                index = 0;
+            let prev = this.dummyHead;
 
-            if (position === 0) {
-                this.head = current.next
-            } else {
-                //循环迭代到目标位置
-                while (index++ < position) {
-                    previous = current;
-                    current = current.next
-                }
-                //跳过current，将当前要移除的元素的上一个与下一项直接连接起来。
-                previous.next = current.next
+            for (let i = 0; i < index; i++) {
+                prev = prev.next
             }
-            //更新链表长度
-            this.length--
+
+            prev.next = new Node(e, prev.next);
+            this.size++
         }
 
-        insert(position, element) {
-            if (position < 0 && position >= this.length) return;
-            let node = new Node(element),
-                current = this.head,
-                previous,
-                index = 0;
+        addFirst(e) {
+            this.add(0, e);
+        }
 
-            if (position === 0) {
-                node.next = current;
-                this.head = node
-            } else {
-                //循环迭代到目标位置
-                while (index++ < position) {
-                    previous = current;
-                    current = current.next
-                }
-                node.next = current;
-                previous.next = node
+        addLast(e) {
+            this.add(this.size, e)
+        }
+
+        get(index) {
+            if (index < 0 || index > this.size) {
+                throw new Error("Add failed. Illegal index")
             }
-            this.length++;
-            return true
-        }
 
-        indexOf(key) {
-            let current = this.head,
-                index = 0;
-
-            while (current) {
-                if (current.key === key) {
-                    return index
-                }
-                index++;
-                current = current.next
+            let cur = this.dummyHead.next;
+            for (let i = 0; i < index; i++) {
+                cur = cur.next
             }
-            return -1
+
+            return cur.e
         }
 
-        isEmpty() {
-            return this.length === 0
+        getFirst() {
+            return this.get(0)
         }
 
-        getLength() {
-            return this.length
+        getLast() {
+            return this.get(this.size - 1)
         }
 
-        getHead() {
-            return this.head
+        set(index, e) {
+            if (index < 0 || index > this.size) {
+                throw new Error("Add failed. Illegal index")
+            }
+
+            let cur = this.dummyHead.next;
+            for (let i = 0; i < index; i++) {
+                cur = cur.next
+            }
+            cur.e = e
+        }
+
+        contains(e) {
+            let cur = this.dummyHead.next;
+            while (cur !== null) {
+                if (cur.e === e) {
+                    return true
+                }
+                cur = cur.next
+            }
+            return false
+        }
+
+        remove(index) {
+            if (index < 0 || index > this.size) {
+                throw new Error("Add failed. Illegal index")
+            }
+
+            let prev = this.dummyHead;
+
+            for (let i = 0; i < index; i++) {
+                prev = prev.next
+            }
+
+            let delNode = prev.next;
+            prev.next = delNode.next;
+            delNode.next = null;
+            this.size--
+        }
+
+        removeFirst() {
+            this.remove(0)
+        }
+
+        removeLast() {
+            this.remove(this.size - 1)
+        }
+
+        removeElement(el) {
+            let prev = this.dummyHead;
+
+            while (prev.next !== null) {
+                if (prev.next.e === el) {
+                    prev.next = prev.next.next
+                } else {
+                    prev = prev.next
+                }
+            }
+
+            this.size--
+        }
+
+        toString() {
+            let ret = '',
+                cur = this.dummyHead.next;
+            while (cur) {
+                ret += `${cur}->`;
+                cur = cur.next
+            }
+            ret += 'null';
+            return ret
         }
     }
 
