@@ -58,6 +58,10 @@
 - [x] [PrimMinIndexHeap(有权图最小成生成树 - 最小索引堆构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Minimum%20Span%20Tree/PrimMinIndexHeap.html)
 - [x] [kruskal(有权图最小生成树 - 并查集构建)](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Minimum%20Span%20Tree/kruskal.html)
 
+##### 其他数据结构
+> 已完成
+- [x] [哈希表](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Other%20data%20structures/HashTable.html)
+
 ##### 致谢
 > 衷心感谢[波波老师](https://github.com/liuyubobobo)的优秀教学
 
