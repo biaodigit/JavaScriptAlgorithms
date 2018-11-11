@@ -13,17 +13,16 @@
             while (j > -1 && str[j + 1] !== str[i]) {
                 j = next[j]
             }
-            if (str[j + 1] === str[i]) {
+            if (str[i] === str[j + 1]) {
                 j++
             }
             next[i] = j
         }
-    };
+    }
 
     function kmp(str, pstr) {
         let slen = str.length,
             plen = pstr.length,
-            i = 0,
             j = -1,
             next = new Array(plen),
             res = [];
@@ -35,7 +34,7 @@
             if (str[i] === pstr[j + 1]) {
                 j++
             }
-            if(j === plen - 1){
+            if (j === plen - 1) {
                 res.push(i - j);
                 j = -1
             }
@@ -43,7 +42,7 @@
         return res.length ? res : 0
     }
 
-    console.log(kmp("bacbababadababacambabacaddababacasdsd", "ababaca"))
+    console.log(kmp("bbc abcdab abcdababacde", "ababac"))
 </script>
 </body>
 </html>

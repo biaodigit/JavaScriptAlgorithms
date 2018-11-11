@@ -10,14 +10,26 @@
      * 以求top k大为例
      * @param arr
      */
-    //region bf解法
     function topK(arr, k) {
-        let index = bfprt(arr, 0, arr.length - 1, k),
-            res = arr.slice(0, index + 1);
-        console.log(`原数组：${arr}`);
-        console.log(`前${k}大元素：${res}`)
+        let bfArr = arr.slice(0),
+            heapArr = arr.slice(0);
+        //bf solution
+        let bfindex = bfprt(arr, 0, bfArr.length - 1, k),
+            ret1 = arr.slice(0, bfindex + 1);
+
+        console.log(`bf solution: 前${k}大元素：${ret1}`);
+
+        //heap solution
+        let heap = new indexMaxHeap(heapArr),
+            ret2 = [];
+        for (let i = 0; i < k; i++) {
+            ret2.push(heap.extractMax())
+        }
+        console.log(`heap solution: 前${k}大元素：${ret2}`)
+
     }
 
+    //region bf solution
     let bfprt = function (arr, l, r, k) {
         let central_index = getCentralIndex(arr, l, r),
             boundary_index = partition(arr, l, r, central_index),
@@ -73,6 +85,67 @@
         [arr[l], arr[j]] = [arr[j], arr[l]];
         return j
     };
+    //endregion
+
+    //region heap solution
+    class indexMaxHeap {
+        constructor(arr) {
+            this.data = [];
+            this.indexes = [];
+            this.reverse = [];
+            this.count = 0;
+            for (let i = 0; i < arr.length; i++) {
+                this.insert(i, arr[i])
+            }
+
+        }
+
+        insert(i, value) {
+            this.data[++i] = value;
+            this.indexes[++this.count] = i;
+            this.reverse[i] = this.count;
+            this.shiftUp(this.count)
+
+        }
+
+        shiftUp(k) {
+            while (k > 1 && this.data[this.indexes[k]] > this.data[this.indexes[k >> 1]]) {
+                this.swapIndex(k, k >> 1)
+                k = k >> 1
+            }
+        }
+
+        shiftDown(k) {
+            while (2 * k <= this.count) {
+                let j = 2 * k;
+                if (j + 1 <= this.count - 1 && this.data[this.indexes[j + 1]] > this.data[this.indexes[j]]) {
+                    j += 1;
+                }
+                if (this.data[this.indexes[k]] >= this.data[this.indexes[j]]) return;
+
+                this.swapIndex(k, j)
+                k = j;
+            }
+        }
+
+        extractMax() {
+            let res = this.data[this.indexes[1]];
+            this.swapIndex(1, this.count);
+            this.reverse[this.indexes[this.count]] = 0;
+            this.count--;
+            this.shiftDown(1);
+            return res
+        }
+
+        swapIndex(i, j) {
+            [this.indexes[i], this.indexes[j]] = [this.indexes[j], this.indexes[i]]
+
+            this.reverse[this.indexes[i]] = i;
+            this.reverse[this.indexes[j]] = j
+
+        }
+    }
+
     //endregion
 
     topK([32, 153, 100, -50, -10, 6, 5, 1356, 20, 160, 2, 1432, 4, 50, 14, 102, -30, 3, 45, 1312, 1, -1, -3], 7)
