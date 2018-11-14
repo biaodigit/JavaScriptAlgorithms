@@ -38,6 +38,16 @@
             }
         }
 
+        search(key) {
+            let map = this.hashTable[this.hash(key)];
+
+            if(!map.has(key)) {
+                throw new Error(`${key} is doesn't exist`)
+            }
+
+            return map.get(key)
+        }
+
         remove(key) {
             let map = this.hashTable[this.hash(key)],
                 ret = null;
@@ -62,6 +72,7 @@
             map.set(key, value)
         }
 
+        //链地址法
         hash(key) {
             let str = null;
             switch (this._type(key)) {
@@ -75,7 +86,7 @@
                     str = key + ''
             }
 
-            return (this._hashCode(str) & 0x7fffffff) % this.M
+            return (this._hashCode(str) & 0x7fffffff) % this.M   //十六进制表示法，一个f表示四个1，共有28个1，一个7在2进制表示3个1，因此一共有31个1，结果是把hashCode(str)对应的整形对应的二进制最高位的1给抹去，对计算机而言是一个符号位，符号位为0表示负数，1为正数
         }
 
         contains(key) {
