@@ -35,11 +35,11 @@
 
 ##### 图论
 > 已完成
-- [x] [邻接矩阵](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Basics/Adjacency%20Matrix.html)
-- [x] [邻接表](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Basics/Adjacency%20Lists.html)
-- [x] [寻路算法](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Basics/FindPath.html)
-- [x] [寻路 - 最短路径查找](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Basics/ShortestPath.html)
-- [x] [无向图 - 连通分量](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Basics/Graph%20Order.html)
+- [x] [邻接矩阵](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Theory//Adjacency%20Matrix.html)
+- [x] [邻接表](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Theory//Adjacency%20Lists.html)
+- [x] [寻路算法](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Theory//FindPath.html)
+- [x] [寻路 - 最短路径查找](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Theory/ShortestPath.html)
+- [x] [无向图 - 连通分量](https://github.com/biaodigit/JavaScriptAlgorithms/blob/master/Graph%20Theory/Graph%20Order.html)
 
 ##### 树
 > 已完成
