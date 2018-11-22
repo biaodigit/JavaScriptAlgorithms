@@ -5,8 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<script src="../Graph%20Basics/Edge.js"></script>
+<script src="../Graph%20Theory/Edge.js"></script>
 <script>
+    //思路：利用最小索引堆，分为3个步骤：
+    // 1、从源点(节点)开始计算寻找到所到点的权值
+    // 2、如果已经过此点则继续寻找后一个最小的权值，没有则先查找到此点是否已经过，没有则继续判断是否已记录权值，有则比较大小，没有则记录到此点的最小权值
+    // 3、利用最小堆推出最小权值，并记录这个权值所对应的点,对这个点重复步骤1
     class PrimMST {
         constructor(matrix) {
             this.rows = matrix.length;

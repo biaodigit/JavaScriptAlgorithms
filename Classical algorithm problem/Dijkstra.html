@@ -5,8 +5,12 @@
     <title>单源最短路径 - 迪杰斯特拉算法</title>
 </head>
 <body>
-<script src="../Graph%20Basics/Edge.js"></script>
+<script src="../Graph%20Theory/Edge.js"></script>
 <script>
+    //思路：利用最小索引堆，分为个步骤：
+    //1、从源点出发标记到源点距离为0，向最小堆插入源点
+    //2、遍历从索引堆取出最小值(假设这个值为x点)到所到点的所有值(假设每个点为y)
+    //3、如果y点没有经过，则marked数组标记y点为true，如果到y点没有记录或当前到y点的值小于已记录的值，则进行修改，同时更新最小索引堆(松驰操作)
     class Dijkstra {
         constructor(graph, s) {
             this.s = s;
@@ -17,7 +21,7 @@
             this.graph = [];
             this.initGraph(graph);
             this.dijkstra(s);
-            console.log(this.from)
+            console.log(this.disTo)
 
         }
 
@@ -35,7 +39,6 @@
 
         dijkstra(s) {
             this.disTo[s] = 0;
-            this.marked[s] = true;
             this.ipq.insert(s, this.disTo[s]);
 
             while (!this.ipq.isEmpty()) {
@@ -48,8 +51,8 @@
                     e = this.graph[v][i];
                     w = e.other(v);
                     if (!this.marked[w]) {
-                        if (!this.from[w] || this.disTo[v] + e.wt() < this.disTo[w]) {
-                            this.disTo[w] = this.disTo[v] + e.wt();
+                        if (!this.from[w] || e.wt() + this.disTo[v] < this.disTo[w]) {
+                            this.disTo[w] = e.wt() + this.disTo[v];
                             this.from[w] = e;
                             if (this.ipq.contain(w)) {
                                 this.ipq.change(w, this.disTo[w])
@@ -198,7 +201,7 @@
         [0, 0, 0, 0, 0]
     ]
 
-    new Dijkstra(graph, 0).showPath(3)
+    new Dijkstra(graph, 0).showPath(4)
 </script>
 </body>
 </html>
