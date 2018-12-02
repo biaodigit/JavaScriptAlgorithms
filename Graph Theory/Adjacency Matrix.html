@@ -30,11 +30,7 @@
 
         addEdge(v, w, weight) {
             if (this.hasEdge(v, w)) {
-                this.g[v][w] = null;
-                if (!this.directed) {
-                    this.g[w][v] = null;
-                }
-                this.m--;
+                return
             }
             this.g[v][w] = new Edge(v, w, weight);
             if (!this.directed) {

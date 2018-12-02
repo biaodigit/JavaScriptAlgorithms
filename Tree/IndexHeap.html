@@ -8,12 +8,16 @@
 <script src="../Sort/SortTestHelper.js"></script>
 <script>
     // 索引堆
-    class IndexMaxHEap {
-        constructor(capatity) {
-            this.data = new Array(capatity + 1);
-            this.indexes = new Array(capatity + 1);
-            this.reverse = new Array(capatity + 1).fill(0);
-            this.count = 0
+    class IndexMaxHeap {
+        constructor(arr, capatity) {
+            this.data = [];
+            this.indexes = [];
+            this.reverse = [];
+            this.count = 0;
+            for (let i = 0; i < arr.length; i++) {
+                this.insert(i, arr[i])
+            }
+
         }
 
         insert(i, node) {
@@ -25,13 +29,10 @@
         }
 
         shiftUp(k) {
-            while (k > 1 && this.data[this.indexes[k]] > this.data[this.indexes[(k / 2) >> 1]]) {
-                swap(this.data, this.indexes[k], this.indexes[(k / 2) >> 1]);
-                this.reverse[this.indexes[(k / 2) >> 1]] = (k / 2) >> 1;
-                this.reverse[this.indexes[k]] = k;
-                k = (k / 2) >> 1;
+            while (k > 1 && this.data[this.indexes[k]] > this.data[this.indexes[k >> 1]]) {
+                this.swapIndex(k, k >> 1)
+                k = k >> 1
             }
-            console.log(this.data)
         }
 
         shiftDown(k) {
@@ -42,11 +43,7 @@
                 }
                 if (this.data[this.indexes[k]] >= this.data[this.indexes[j]]) return;
 
-                swap(this.data, this.indexes[k], this.indexes[j]);
-
-                this.reverse[this.indexes[k]] = k;
-                this.reverse[this.indexes[j]] = j;
-
+                this.swapIndex(k, j)
                 k = j;
             }
             console.log(this.data)
@@ -56,10 +53,18 @@
             return this.data[i + 1]
         }
 
+        extractMax() {
+            let res = this.data[this.indexes[1]];
+            this.swapIndex(1, this.count);
+            this.reverse[this.indexes[this.count]] = 0;
+            this.count--;
+            this.shiftDown(1);
+            return res
+        }
+
         extractMaxIndex() {
             let res = this.indexes[1];
-            swap(this.data, this.indexes[1], this.indexes[this.count]);
-            this.reverse[this.indexes[1]] = 1;
+            this.swapIndex(1, this.count)
             this.reverse[this.indexes[this.count]] = 0;
             this.count--;
             this.shiftDown(1);
@@ -72,7 +77,18 @@
             this.shiftUp(j);
             this.shiftDown(j);
         }
+
+        swapIndex(i, j) {
+            [this.indexes[i], this.indexes[j]] = [this.indexes[j], this.indexes[i]];
+
+            this.reverse[this.indexes[i]] = i;
+            this.reverse[this.indexes[j]] = j;
+        }
     }
+
+    let arr = [32, 153, 100, -50, -10, 6, 5, 1356, 20, 160, 2, 1432, 4, 50, 14, 102, -30, 3, 45, 1312, 1, -1, -3]
+    let heap = new IndexMaxHeap(arr, arr.length)
+    console.log(heap)
 </script>
 </body>
 </html>

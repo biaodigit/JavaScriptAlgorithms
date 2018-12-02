@@ -17,7 +17,7 @@
         let bfindex = bfprt(arr, 0, bfArr.length - 1, k),
             ret1 = arr.slice(0, bfindex + 1);
 
-        console.log(`bf solution: 前${k}大元素：${ret1}`);
+        console.log(`前${k}大元素：${ret1}`);
 
         //heap solution
         let heap = new indexMaxHeap(heapArr),
@@ -25,7 +25,7 @@
         for (let i = 0; i < k; i++) {
             ret2.push(heap.extractMax())
         }
-        console.log(`heap solution: 前${k}大元素：${ret2}`)
+        console.log(`前${k}大元素：${ret2}`)
 
     }
 

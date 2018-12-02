@@ -7,7 +7,7 @@
 <body>
 <script>
     //  二叉搜索树
-    let Node = function(value) {
+    let Node = function (value) {
         this.value = value;
         this.right = null;
         this.left = null;
@@ -241,7 +241,7 @@
         }
 
         postOrderMorris(node) {
-            if (!node) return
+            if (!node) return;
             let root = new Node(null),
                 pre;
             root.left = node;
@@ -262,14 +262,6 @@
                         root = root.right
                     }
                 }
-            }
-        }
-
-        destroy(node) {
-            if (node) {
-                this.destroy(node.left)
-                this.destroy(node.right)
-                node = null
             }
         }
 

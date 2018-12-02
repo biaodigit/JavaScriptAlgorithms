@@ -18,8 +18,8 @@
             return
         }
 
-        let p = _partition(arr, l, r)
-        _quickSort(arr, l, p - 1)
+        let p = _partition(arr, l, r);
+        _quickSort(arr, l, p - 1);
         _quickSort(arr, p + 1, r)
     }
 
@@ -40,7 +40,7 @@
             i++;
             j--;
         }
-        swap(arr, l, j)
+        swap(arr, l, j);
         return j
     }
     DoubleWayQuickSort([3, 1, 3, 5, 4, 4, 4, 7, 2, 4, 9, 4, 4, 6, 10, 8])

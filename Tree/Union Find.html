@@ -20,6 +20,9 @@
 
         find(p) {
             if (p < 0 || p >= this.count) return;
+            let stack = [],
+                cur = p,
+                prev;
             // path compression 1
             // while (p !== this.parent[p]) {
             //     this.parent[p] = this.parent[this.parent[p]];
@@ -27,8 +30,15 @@
             // }
             // return p
             // path compression 2
-            if (p !== this.parent[p]) {
-                this.parent[p] = this.find(this.parent[p])
+            // if (p !== this.parent[p]) {
+            //     this.parent[p] = this.find(this.parent[p])
+            // }
+            while (cur !== this.parent[cur]) {
+                stack.push(cur);
+                cur = this.parent[cur]
+            }
+            while (stack.length) {
+                this.parent[stack.pop()] = cur
             }
             return this.parent[p];
         }

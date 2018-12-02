@@ -65,14 +65,14 @@
         //     / \              /   \
         //    T2 T3            T1   T2
         leftRotate(node) {
-            let x = node.right,
-                T2 = x.left;
+            let x = node.right;
 
+            node.right = x.left;
             x.left = node;
-            node.right = T2;
 
             x.color = node.color;
-            node.color = RED
+            node.color = RED;
+
 
             return x
         }
@@ -83,10 +83,11 @@
         //  / \                       /  \
         // y  T1                     T1  T2
         rightRotate(node) {
-            let x = node.left,
-                T1 = x.right;
+            let x = node.left;
+
+
+            node.left = x.right;
             x.right = node;
-            node.left = T1;
 
             x.color = node.color;
             node.color = RED;
@@ -115,13 +116,33 @@
         }
     }
 
-    let RBTree = new RedBlackTree();
-    RBTree.add(26, 26)
-    RBTree.add(17, 17)
-    RBTree.add(41, 41)
-    RBTree.add(30, 30)
-    RBTree.add(47, 47)
-    console.log(RBTree)
+    function main() {
+        let n = 10000000,
+            nums = [];
+        for (let i = 0; i < n; i++) {
+            nums.push(i)
+        }
+        let start = new Date().getTime(),
+            RBTree = new RedBlackTree();
+
+        for(num of nums){
+            RBTree.add(num, null)
+        }
+
+        let end = new Date().getTime(),
+            time = (end - start) / 1000;
+
+        console.log(time)
+    }
+
+    main()
+    // let RBTree = new RedBlackTree();
+    // RBTree.add(26, 26)
+    // RBTree.add(17, 17)
+    // RBTree.add(41, 41)
+    // RBTree.add(30, 30)
+    // RBTree.add(47, 47)
+    // console.log(RBTree)
 </script>
 </body>
 </html>

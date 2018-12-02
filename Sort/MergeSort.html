@@ -6,6 +6,12 @@
 </head>
 <body>
 <script>
+    function mergeSort(arr) {
+        let len = arr.length
+        _mergeSort(arr, 0, len - 1)
+        console.log(arr)
+    }
+
     function _merge(arr, l, mid, r) {
         let aux = [];
         for (let i = l; i <= r; i++) {
@@ -43,17 +49,11 @@
         if (l >= r) {
             return
         }
-        let mid = Math.floor((l + r) / 2)
-        _mergeSort(arr, l, mid)
-        _mergeSort(arr, mid + 1, r)
+        let mid = (l + r) >> 1;
+        _mergeSort(arr, l, mid);
+        _mergeSort(arr, mid + 1, r);
         if (arr[mid] > arr[mid + 1])
             _merge(arr, l, mid, r)
-    }
-
-    function mergeSort(arr) {
-        let len = arr.length
-        _mergeSort(arr, 0, len - 1)
-        console.log(arr)
     }
 
     /**
