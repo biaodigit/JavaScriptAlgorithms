@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LRU</title>
+</head>
+<body>
+<script>
+    class ListNode {
+        constructor(key, value) {
+            this.key = key;
+            this.value = value;
+            this.next = this.prev = null;
+        }
+    }
+
+    class LRU {
+        constructor(capicity) {
+            this.head = new ListNode(-1, -1);
+            this.tail = new ListNode(-1, -1);
+            this.head.next = this.tail;
+            this.tail.prev = this.head;
+            this.map = new Map();
+            this.size = 0;
+            this.capicity = capicity
+        }
+
+        get(key) {
+            let node = this.map.get(key);
+            if (node) {
+                this.moveToHead(node);
+                return node.value
+            }
+            return -1
+        }
+
+        put(key, value) {
+            let node = this.map.get(key);
+            if (node) {
+                node.value = value;
+                this.moveToHead(node)
+            } else {
+                node = new ListNode(key, value);
+                this.attachToHead(node);
+                this.size++;
+            }
+
+            if (this.size > this.capicity) {
+                this.removeLast();
+                this.size--;
+            }
+            this.map.set(key, node);
+        }
+
+        moveToHead(node) {
+            node.next.prev = node.prev;
+            node.prev.next = node.next;
+            this.attachToHead(node)
+        }
+
+        attachToHead(node) {
+            node.next = this.head.next;
+            node.next.prev = node;
+            node.prev = this.head;
+            this.head.next = node
+        }
+
+        removeLast() {
+            let last = this.tail.prev;
+            last.prev.next = this.tail;
+            this.tail.prev = last.prev;
+            this.map.delete(last.key)
+        }
+    }
+</script>
+</body>
+</html>
